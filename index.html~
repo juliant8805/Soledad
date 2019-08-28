@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>  
+        <meta charset="UTF-8">
+        <title>Ingreso Plataforma</title>
+        <link rel="stylesheet" href="src/bootstrap/css/bootstrap1.css">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/login.css">
+        <script src="js/md5.inc.js"></script>
+        <script src="js/prefixfree.min.js"></script>
+        <script src="sql/jsSearch.js"></script>
+        <script src="src/jquery/jquery.min.js"></script>
+        <script src="src/bootstrap/js/bootstrap.min.js"></script>
+    <div id="imagen_ini" hidden="hidden"><img src="/imagenes/fondo_inippp.jpg" style="top:0%; left:0%; height:100%; width:auto; position:absolute"></div> 
+    <img id="video" hidden="hidden" src= "imagenes/img_login.png" width="100%" >
+        
+       
+    </img>
+    <!--<video id="video_baja" hidden="hidden" width="100%" controls autoplay>
+    <source src="demo_baja.mp4" type="video/mp4">
+    Por favor utilice otro navegador (Chrome, Mozilla, Safari, Explorer).
+    </video>-->
+    <script>
+        var tamañopantalla = screen.width > 800;
+        if (tamañopantalla === true) {
+            //alert("grande"); 
+            document.getElementById("video").style.display = "block";
+        } else {
+            //alert("pequeña");
+            document.getElementById("imagen_ini").style.display = "block";
+        }
+    </script>     
+</head>
+<body onload="onload()">
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form class="form-horizontal" method="post" action="" onsubmit="resetpass()">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Recordar Contraseña</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="control-group">
+                            <label class="control-label">Ingrese su correo electronico</label>
+                            <div class="controls">
+                                <input class="form-control" type="email" id="email" required="required">
+                                <!--<input type="password" id="password" name="current_password" required="required">-->
+                            </div>
+                        </div>
+                        <!--<div class="control-group">
+                            <label for="new_password" class="control-label">Nueva Contraseña</label>
+                            <div class="controls">
+                                <input type="password" id="newpassword"  name="new_password" required="required">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="confirm_password" class="control-label">Confirmar Contraseña </label>
+                            <div class="controls">
+                                <input type="password" id="cpassword" name="confirm_password" required="required">
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="modal-footer">
+                        <button href="#" class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+                        <button type="submit" class="btn btn-primary" id="save">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="login">
+        <!--<img id="tipo_usuario" src="./imagenes/tipo_usuario.png" data-toggle="modal" data-target="#myModal"  title="Cambiar Contraseña">-->
+        <img src="./imagenes/logo_login_soledad.png" style="width: 100%; margin-top: 20px;">
+        <form method="post" action="validacion.html">
+            </br><input type="text" id="u" name="u" placeholder="Usuario" required="required" onclick="ampliarlogin()"/>
+            </br>
+            <input type="password" id="p" name="p" placeholder="Contraseña" required="required" onclick="ampliarlogin()"/>
+            <h5 id="remember" class="error" data-toggle="modal" data-target="#myModal" style="text-decoration: none;"><ins>Olvide mi contraseña</ins></h5>
+            </br></br>
+            <button type="submit" id="b" class="btn btn-primary btn-block btn-circle" onclick="setCookie()">LOG IN</button>
+            <h2 id="er" class="error" hidden="hidden">Credenciales no validas</h2>
+            <h2 id="er1" class="error" hidden="hidden">Por favor ingrese desde Google Chrome</h2>
+        </form>
+        <img src="./imagenes/gesstor.png" style="width: 33%; margin-top: 15px; margin-left: 105px;">
+    </div>
+    <script>
+        function ampliarlogin() {
+            if (screen.width < 768) {
+                $("body").css("zoom", window.innerWidth / 500);
+            }
+        }
+    </script>
+    <script src="principal/load.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/md5.inc.js"></script>
+    <!--<script src="sql/wsDatosBasicos.php"></script>
+    <script src="sql/wsHistoricoPagos.php"></script>
+    <script src="sql/wsHistoricoAbonos.php"></script>
+    <script src="sql/wsAcuerdoPago.php"></script>
+    <script src="sql/wsLiquidacion.php"></script>
+    <script src="sql/wsEstadoCuenta.php"></script>-->
+</body>
+</html>

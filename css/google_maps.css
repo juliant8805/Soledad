@@ -1,0 +1,39 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+/*#map{
+    float: left;
+    height: 50%;
+    width: 100%;
+    /*z-index: 0;
+}*/
+#pano {
+    float: left;
+    height: 100%;
+    width: 100%;
+    /*z-index: 0;*/
+}
+
+#cerrar{
+    position: absolute;
+    top:10px;
+    right:30px;
+    height: 57%;
+    width: 50%;
+    z-index: 10;
+}
+img{
+    height: 970px;
+    width: 572px;
+}
+#marco{
+    position: absolute;
+    bottom: 0em;
+    right: 0em;
+    width: 30%; 
+    height: 40%;
+    z-index: 2;
+}

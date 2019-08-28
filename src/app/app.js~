@@ -1,0 +1,919 @@
+// ========= config section ================================================
+//var url = 'http://35.184.176.7:8081/geoserver/ows?';
+var url = 'http://35.226.110.153:8081/geoserver/ows?';
+var featurePrefix = 'soledad';
+var featureType = ['predios_street_view_captura', 'gesstorstreetviews', 'wfs_point'];
+var featureNS = 'http://soledad';
+var srsName = 'EPSG:4326';
+var geometryName = 'geom';
+var geometryType = 'MultiPolygon';
+var fields = ['*'];
+var infoFormat = 'application/vnd.ogc.gml/3.1.1';
+var center = [-8323241.990028, 1223139.041573];
+var zoom = 13;
+// =========================================================================
+var proj = new ol.proj.Projection({
+    code: 'http://www.opengis.net/gml/srs/epsg.xml#4326',
+    axis: 'enu'
+});
+var format = [];
+var wmsSource = [];
+var codigo_ant = "";
+var panoramica="";
+function putgif() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve();
+        }, 0);
+        document.getElementById('carga2').style.display = "block";
+    });
+}
+function quitgif() {
+    document.getElementById('carga2').style.display = "none";
+}
+var rangoarea = async function (x) { // async function expression assigned to a variable
+    await putgif();
+    await rango(x);
+    await quitgif();
+};
+
+
+
+
+for (var i = 0; i <= featureType.length - 1; i++)
+{
+    format[i] = new ol.format.GML({featureNS: featureNS, featureType: featureType[i]});
+    wmsSource[i] = new ol.source.TileWMS({
+        url: url,
+        params: {
+            'LAYERS': featurePrefix + ':' + featureType[i],
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+};
+var popup = new app.Popup({
+    element: document.getElementById('popup'),
+    closeBox: true,
+    autoPan: true
+});
+var highlight = new ol.layer.Vector({
+    style: new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: '#00FFFF',
+            width: 3
+        })
+    }),
+    source: new ol.source.Vector()
+});
+var highlightt = new ol.layer.Vector({
+    style: new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: '#00FFFF',
+            width: 3
+        })
+    }),
+    source: new ol.source.Vector()
+});
+var highlighttt = new ol.layer.Vector({
+    style: new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: '#00FFFF',
+            width: 3
+        })
+    }),
+    source: new ol.source.Vector()
+});
+var PuntoStyle = new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: 10,
+          stroke: new ol.style.Stroke({
+            color: 'white',
+            width: 2
+          }),
+          fill: new ol.style.Fill({
+            color: '#FF0000'
+          })
+    })
+});
+
+
+var flagStyle = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/flag.png'
+    })
+});
+
+var psvgiroStyle = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/psvgiro.png'
+    })
+});
+
+var psvgiroStyle2 = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/psvgiro2.png'
+    })
+});
+
+var psvgiroStyle3 = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/psvgiro3.png'
+    })
+});
+
+var psvgiroStyle4 = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/psvgiro4.png'
+    })
+});
+
+var psvgiroStyle5 = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/psvgiro5.png'
+    })
+});
+
+var psvgiroStyle6 = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/psvgiro6.png'
+    })
+});
+
+var psvgiroStyle7 = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/psvgiro7.png'
+    })
+});
+
+var psvgiroStyle8 = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/psvgiro8.png'
+    })
+});
+
+var psvgiroStyle9 = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/psvgiro9.png'
+    })
+});
+
+var markStyle = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        //opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/marca.png'
+    })
+});
+
+var markStylePoste = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        //opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/marca_poste.png'
+    })
+});
+
+var markStyleArbol = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        //opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/marca_arbol.png'
+    })
+});
+
+var markStyleAntena = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        //opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/marca_antena.png'
+    })
+});
+
+var markStyleAvisos = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        //opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/marca_avisos.png'
+    })
+});
+
+var markStyleSenalizacion = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.2, 0.9],
+        //opacity: 0.75,
+        scale: 0.25,
+        src: './imagenes/marca_senalizacion.png'
+    })
+});
+
+
+
+var measuring = false;
+measureControl = function (opt_options) {
+    var options = opt_options || {};
+    var button = document.createElement('button');
+    button.innerHTML = '<img src="../cucuta/imagenes/measure-control.png" />';
+    var this_ = this;
+    var handleMeasure = function (e) {
+        if (!measuring) {
+            this_.getMap().addInteraction(draw);
+            measuring = true;
+        } else {
+            this_.getMap().removeInteraction(draw);
+            measuring = false;
+        }
+    };
+    button.addEventListener('click', handleMeasure, false);
+    button.addEventListener('touchstart', handleMeasure, false);
+    var element = document.createElement('div');
+    element.className = 'measure-control ol-unselectable ol-control';
+    element.appendChild(button);
+    ol.control.Control.call(this, {
+        element: element,
+        target: options.target
+    });
+};
+ol.inherits(measureControl, ol.control.Control);
+var mousePositionControl = new ol.control.MousePosition({
+    coordinateFormat: ol.coordinate.createStringXY(4),
+    projection: 'EPSG:4326',
+    className: 'custom-mouse-position',
+    target: document.getElementById('mouse-position'),
+    undefinedHTML: '&nbsp;'
+});
+map = new ol.Map({
+    controls: ol.control.defaults().extend([new ol.control.ScaleLine(), new ol.control.ZoomToExtent({
+            extent: [-8325183.102637, 1222020.558635, -8321300.877419, 1224257.524511]
+        }), new measureControl(),
+        new ol.control.OverviewMap({
+            className: 'ol-overviewmap ol-custom-overviewmap',
+            layers: [new ol.layer.Tile({
+                    source: new ol.source.OSM({
+                        'url': 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
+                    })
+                })],
+            collapseLabel: '\u00BB',
+            label: '\u00AB',
+            collapsed: true
+        })
+    ]).extend([mousePositionControl]),
+    // add the popup as a map overlay
+    overlays: [popup],
+    // render the map in the 'map' div
+    target: document.getElementById('map'),
+    // use the Canvas renderer
+    renderer: 'canvas',
+    layers: [layerBase, layerCatastro, layerOrtofoto, recorrido, highlight, highlightt],
+    view: new ol.View({
+        center: center,
+        zoom: zoom,
+        //extent: [-8325183.102637, 1222020.558635, -8321300.877419, 1224257.524511],
+        maxZoom: 21, minZoom: 1
+    })
+});
+
+map.getLayerGroup().set('name', 'CAPAS');
+// register a single click listener on the map and show a popup
+// based on WMS GetFeatureInfo
+var panoramica="";
+
+map.on('singleclick', function (evt) {
+    //console.log(panoramica);
+    document.getElementById("panel_atr").style.display = "none";
+   // document.getElementById("tablaatributos").style.display = "none";
+    
+    var viewResolution = map.getView().getResolution();
+    var url = wmsSource[0].getGetFeatureInfoUrl(
+            evt.coordinate, viewResolution, map.getView().getProjection(),
+            {'INFO_FORMAT': infoFormat}
+    );
+    var url2 = wmsSource[1].getGetFeatureInfoUrl(
+            evt.coordinate, viewResolution, map.getView().getProjection(),
+            {'INFO_FORMAT': infoFormat}
+    );
+    var url3 = wmsSource[2].getGetFeatureInfoUrl(
+            evt.coordinate, viewResolution, map.getView().getProjection(),
+            {'INFO_FORMAT': infoFormat}
+    );
+    var tamañopantalla = screen.width>800;  
+    if (url2 && document.getElementById("medidas").style.display == "none") {
+        $.ajax({
+            url: url,
+            beforeSend: function () {
+            if (tamañopantalla==true){
+                putgif();}
+                else{
+                    document.getElementById("carga3").style.display = "block";  
+                }
+            },
+            success: function (data) {	
+                //console.log(data);
+                var features = format[0].readFeatures(data);
+                try{
+                var temp1 = features["0"].actualEventTarget_.actualEventTarget_.geometryName_;
+                    }
+                catch (err) {
+                    var temp ="nogeom";
+                }
+                if (temp1 == "geom") {
+                        var feature = features[0];
+                        var values = feature.getProperties();
+                        codigo_ant = values.codigo_ant;
+                        panoramica = values.nombre;
+                        var ph = values.cod_ph;
+                        //var registro = search("soledad:buscar_registros_soledad", codigo_ant);
+                        var datosipu = search("soledad:datosipu", values.codigo);
+                        var zhg = search("soledad:zhg_u_terreno", values.codigo);
+                        console.log('LOS DATOS IPU',datosipu);
+                        console.log('LOS DATOS zhg',zhg[0][5]);
+                    try {
+                    var direccion = datosipu[0][0];
+                    }
+                    catch (error) {
+                    var direccion = "Sin Información";
+                    }
+                    try {
+                    var codigocat = datosipu[0][1];
+                    }
+                    catch (error) {
+                    var codigocat = "Sin Información";
+                    }
+                    try {
+                    var codigocatant = datosipu[0][2];
+                    }
+                    catch (error) {
+                    var codigocatant = "Sin Información";
+                    }
+                    try {
+                    var matric = datosipu[0][3];
+                    }
+                    catch (error) {
+                    var matric = "Sin Información";
+                    }
+                    try {
+                    var propiet = datosipu[0][4];
+                    }
+                    catch (error) {
+                    var propiet = "Sin Información";
+                    }   
+                    try {
+                    var propiet = datosipu[0][4];
+                    }
+                    catch (error) {
+                    var propiet = "Sin Información";
+                    }             
+                    try {
+                    var documento = datosipu[0][5];
+                    }
+                    catch (error) {
+                    var documento = "Sin Información";
+                    }
+                    try {
+                    var avaluo = datosipu[0][7];
+                    }
+                    catch (error) {
+                    var avaluo = "Sin Información";
+                    }
+                    
+                    try {
+                    var areat = datosipu[0][8];
+                    }
+                    catch (error) {
+                    var areat = "Sin Información";
+                    }
+                    try {
+                    var areac = datosipu[0][9];
+                    }
+                    catch (error) {
+                    var areac = "Sin Información";
+                    }
+                    try {
+                    var valorm2 = zhg[0][5];
+                    }
+                    catch (error) {
+                    var valorm2 = "Sin Información";
+                    }
+                    
+                    if (ph >= 800) {
+                   
+                            var table = document.getElementById("tblatt");
+                        document.getElementById("tblatt").style.visibility = "visible";
+                        document.getElementById("tblatt").style.display = "initial";
+                        document.getElementById("tblatt").style.height = "auto";
+                        document.getElementById("panel_atr").style.visibility = "visible";
+                        document.getElementById("panel_atr").style.display = "initial";
+                        document.getElementById("panel_atr").style.height = "auto";
+
+                        table.innerHTML = "";
+                        var row = table.insertRow(0);
+                        var cell1 = row.insertCell(0);
+                        cell1.colSpan = 2;
+                        cell1.innerHTML = "<H5><b>PROPIEDAD HORIZONTAL</b></H5>";
+                        var select = [];
+                        var sel = [];
+                        var imag = [];
+                        var stv = [];
+                        var ig = [];
+                        for (i = 0; i < datosipu.length; i++) {
+                            var tablaph = ("<table max-width=20 border=1 id='tablaph'>");
+                            for (i = 0; i < datosipu.length; i++) {
+                                //var req = {term: direccion[i], val:123};
+                                dirg = direccion[i];
+                                tablaph += ("<tr>");
+                                try {
+                                tablaph += ("<td id=tt" + i + "><b>" + datosipu[i][0] + "</b></td>");
+                                }
+                                catch (error) {
+                                tablaph += ("<td id=tt" + i + "><b>Sin Información</b></td>");
+                                }
+                                tablaph += ("</tr>");
+                            }
+                            tablaph += ("</table>");
+                        }
+                        select[0] = "<b>Número de PH</b>";
+                        select[1] = "<b>Direcciones</b>";
+                        select[2] = "<b>Street View</b>";
+                      /* sel[0] = datosipu.length;
+                        sel[1] = tablaph;*/
+                        sel[0] = datosipu.length;
+                        sel[1] = tablaph;
+                        stv[2] = document.createElement("a");
+                        stv[2].id = "imgstreet";
+                        stv[2].target = "marco";
+                        stv[2].href = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                        stv[2].setAttribute("onclick", "open_streetview()");
+                        ig[2] = document.createElement("img");
+                        ig[2].src = "./imagenes/streetview.png";
+                        for (i = 0; i < select.length; i++) {
+                            row = table.insertRow(i + 1);
+                            cell1 = row.insertCell(0);
+                            cell2 = row.insertCell(1);
+                            cell1.innerHTML = select[i];
+                            if (i === 2) {
+                                cell2.appendChild(stv[i]);
+                                stv[i].appendChild(ig[i]);
+                            } else {
+                                cell2.innerHTML = sel[i];
+                            }
+                        }
+                    //  console.log(direccion);
+                        for (i = 0; i < datosipu.length; i++) {
+                            var ell = document.getElementById("tt" + i);
+
+                            var alg = "addressSource('tt" + i + "')";
+                            ell.setAttribute("onclick", alg);
+                            ell.value = datosipu[i][0];
+                           // console.log(ell.value);
+                            //ell.onclick = function(){addressSource(direccion[i]);};
+                        }
+
+                    } else {
+                      	//TABLA CLICK EN PREDIOS
+                        var table = document.getElementById("tblatt");
+                        table.innerHTML = "";
+                        var row = table.insertRow(0);
+                        var cell1 = row.insertCell(0);
+                        cell1.colSpan = 2;
+                        cell1.innerHTML = "<b>INFORMACION DEL PREDIO</b>";
+                        var select = [];
+                        var sel = [];
+                      
+                    
+                    		var row = tblatt.insertRow(1);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
+                        cell11.style = "background-color: #cccccc; border:0; margin:0;";
+                        cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>1. NÚMERO DE PISOS EN LA FOTOGRAFÍA:</h8>";
+
+                    
+                        var row = tblatt.insertRow(2);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
+                        cell11.style = "background-color: white; border:0; margin:0;";
+                        cell11.innerHTML = "<input type='number' id='numeropisos' name='numeropisos' style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' placeholder='Ingrese el Número de Pisos que ve en la fotografía'>";
+
+  								var row = tblatt.insertRow(3);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
+                        cell11.style = "background-color: #cccccc; border:0; margin:0;";
+                        cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>2. DESTINO ECONÓMICO:</h8>";
+
+  								 								
+  								var row = tblatt.insertRow(4);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
+                        cell11.style = "background-color: white; border:0; margin:0;";
+                        cell11.innerHTML = "<select style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' id='destinofoto' name='destinofoto'><option value ='residencial'>Residencial</option><option value ='comercial'>Comercial</option><option value ='industrial'>Industrial</option><option value ='otro'>Otro no Residencial</option></select>";
+
+                        
+                        var row = tblatt.insertRow(5);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
+                        cell11.style = "background-color: #cccccc; border:0; margin:0;";
+                        cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>3. MUTACIÓN CATASTRAL:</h8>";
+
+
+                        var row = tblatt.insertRow(6);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
+                        cell11.style = "background-color: white; border:0; margin:0;";
+                        cell11.innerHTML = "<select style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' id='mutacion' name='mutacion'><option value ='sinnovedad'>Sin Novedad</option><option value ='Englobe'>Englobe</option><option value ='Desenglobe'>Desenglobe</option></select>";
+ 
+                        var row = tblatt.insertRow(7);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
+                        cell11.style = "background-color: #cccccc; border:0; margin:0;";
+                        cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>4. OBSERVACIONES:</h8>";
+
+ 
+                        var row = tblatt.insertRow(8);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
+                        cell11.style = "background-color: white; border:0; margin:0;";
+                        cell11.innerHTML = "<input type='text' id='observacionespredio' name='observacionespredio' style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' placeholder='Diligencie cualquier tipo de información adicional'>";
+                       
+                    
+                        var row = tblatt.insertRow(9);
+                        var cell12 = row.insertCell(0);
+                        cell12.colSpan = 2;
+                        cell12.style = "background-color: white; border:0; margin:0;";
+                        cell12.innerHTML = "<button id='editarinfo' name='editarinfo' onclick='agregarinfoprediocaptura();' class='btn btn-primary btn-lg'>Guardar</button>";                        
+                        
+                        select[0] = "<b>Dirección</b>";
+                        select[1] = "<b>Codigo Catastral</b>";
+                       // select[2] = "<b>Destino Ecónomico</b>";
+                        select[2] = "<b>Área de Terreno</b>";
+                        select[3] = "<b>Área Construida</b>";
+                        select[4] = "<b>Número de Pisos</b>";
+                        select[5] = "<b>Destino Económico Fotografia</b>";
+                        select[6] = "<b>Mutación Catastral</b>";
+                        select[7] = "<b>Observaciones</b>";
+                        
+                        sel[0] = direccion;
+                        sel[1] = codigo_ant;
+                        //sel[2] = destino;
+                        sel[2] = areat + " Metros Cuadrados";
+                        sel[3] = areac + " Metros Cuadrados";
+                        sel[4] = values.npisos;
+                        sel[5] = values.destino;
+                        sel[6] = values.mutacion;
+                        sel[7] = values.observacio;
+                    
+                        var campos = 7;
+                        for (i = 0; i < select.length; i++) {
+                            row = table.insertRow(i + 1);
+                            cell1 = row.insertCell(0);
+                            cell2 = row.insertCell(1);
+                            cell1.innerHTML = select[i];
+                            cell2.innerHTML = sel[i];
+                            //sel[i].appendChild(imag[i]);
+                            //cell2.appendChild(stv[i]);
+                            //stv[i].appendChild(ig[i]);                
+                        } 
+                        }
+                    document.getElementById("botonminimizar").style.display = "block";
+					   document.getElementById("panel_atr").style.display = "block";
+                    var c = feature.values_.geom.flatCoordinates.length - 1;
+                    for (var i = 0; i <= c; i = i + 3) {
+                        var a = feature.values_.geom.flatCoordinates[i];
+                        feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
+                        feature.values_.geom.flatCoordinates[i + 1] = a;
+                    }
+                    feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+                    highlightfeaturespredios.setStyle(PredioStyle);
+                    var markerSourcenoph = highlightfeaturespredios.getSource();
+                    markerSourcenoph.clear();
+                    markerSourcenoph.addFeature(feature);
+                    
+                }
+            },
+         complete: function(){
+                if (tamañopantalla==true){
+                quitgif(); }
+                else{
+                document.getElementById("carga3").style.display = "none";  
+                   }
+            }   
+        });
+    }
+    
+    if (url2 && document.getElementById("medidas").style.display == "none") {
+    $.ajax({
+            url: url2,
+            beforeSend: function () {
+            if (tamañopantalla==true){
+                putgif();}
+                else{
+                    document.getElementById("carga3").style.display = "block";  
+                }
+            },
+            success: function (data) {
+                var features = format[1].readFeatures(data);
+                try{
+                var temp = features["0"].actualEventTarget_.actualEventTarget_.geometryName_;
+                    }
+                catch (err) {
+                    var temp ="nogeom";
+                }
+                if (temp == "geom") {
+                    document.getElementById('container3').innerHTML='';
+                    document.getElementById('marco').style.display = 'block';
+                    document.getElementById('container3').style.display = 'block';
+                    var feature = features[0]
+                    var features = format[1].readFeatures(data);
+                    var values = feature.getProperties();
+                    var marca = values.streetview;
+                 //   console.log(marca);
+                    marca1 = marca;
+                    panorama1(marca);
+					     panoramica = values.nombre;
+                    var urlsv = "street_view.html?coordenadas=" + values.geom.flatCoordinates;
+                    
+                    //OPEN 3D GOOGLE MAPS
+                    window.open(urlsv, target="marco"); 
+                    //window.open(urlsv, "googlemaps","width=120,height=300,scrollbars=NO"); 
+                    
+
+                   var c = feature.values_.geom.flatCoordinates.length - 1;;
+                    for (var i = 0; i <= c; i = i + 3) {
+                        var a = feature.values_.geom.flatCoordinates[i];
+                        feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
+                        feature.values_.geom.flatCoordinates[i + 1] = a;
+                    }
+                    feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+                    highlightfeatures.setStyle(PuntoStyle);
+                    var markerSourcenoph = highlightfeatures.getSource();
+                    markerSourcenoph.clear();
+                    markerSourcenoph.addFeature(feature);
+                    
+                }
+            },
+         complete: function(){
+                if (tamañopantalla==true){
+                quitgif(); }
+                else{
+                document.getElementById("carga3").style.display = "none";  
+                   }
+            }   
+       
+        });
+    }
+    
+    if (url3 && document.getElementById("medidas").style.display == "none") {
+        $.ajax({
+            url: url3,
+            beforeSend: function () {
+            if (tamañopantalla==true){
+                putgif();}
+                else{
+                    document.getElementById("carga3").style.display = "block";  
+                }
+            },
+            success: function (data) {	
+                //console.log(data);
+                var features = format[2].readFeatures(data);
+                try{
+                var temp1 = features["0"].actualEventTarget_.actualEventTarget_.geometryName_;
+                    }
+                catch (err) {
+                    var temp ="nogeom";
+                }
+                if (temp1 == "geom") {
+                        var feature = features[0];
+                        var values = feature.getProperties();
+                        var table = document.getElementById("tblatt");
+                        table.innerHTML = "";
+                        var row = table.insertRow(0);
+                        var cell1 = row.insertCell(0);
+                        cell1.colSpan = 2;
+                        cell1.innerHTML = "<b>INFORMACION DEL OBJETO CAPTURADO</b>";
+                        var select = [];
+                        var sel = [];
+                        var medicion = values.medicion;
+                        var observaciones = values.observacio;
+                        var tipo = values.tipo;
+                        if (medicion == 0){
+                            medicion = "Sin Información";
+                        }
+                        else{
+                           medicion = medicion + " m2" 
+                        }
+                        if (!observaciones){
+                            observaciones = "Sin Información";
+                            }
+                        if (tipo == "avisosyletreros"){
+                            tipo = "Avisos y Tableros";
+                        }
+                        if (tipo == "senalizacion"){
+                            tipo = "Señalización";
+                        }
+                        select[0] = "<b>Fotografía</b>";
+                        select[1] = "<b>Tipo de Elemento</b>";
+                        select[2] = "<b>Observaciones</b>";
+                        select[3] = "<b>Altura</b>";
+                        sel[0] = values.streetview;
+                        sel[1] = tipo;
+                        sel[2] = observaciones;
+                        sel[3] = medicion;
+                        var campos = 3;
+                        for (i = 0; i < select.length; i++) {
+                            row = table.insertRow(i + 1);
+                            cell1 = row.insertCell(0);
+                            cell2 = row.insertCell(1);
+                            cell1.innerHTML = select[i];
+                            cell2.innerHTML = sel[i];
+                            //sel[i].appendChild(imag[i]);
+                            //cell2.appendChild(stv[i]);
+                            //stv[i].appendChild(ig[i]);                
+                        } 
+                    document.getElementById("botonminimizar").style.display = "block";
+					document.getElementById("panel_atr").style.display = "block";
+                    
+                    
+                    
+                    var c = feature.values_.geom.flatCoordinates.length - 1;;
+                    for (var i = 0; i <= c; i = i + 3) {
+                        var a = feature.values_.geom.flatCoordinates[i];
+                        feature.values_.geom.flatCoordinates[i] = feature.values_.geom.flatCoordinates[i + 1];
+                        feature.values_.geom.flatCoordinates[i + 1] = a;
+                    }
+                    feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+                    highlightfeatures.setStyle(PuntoStyle);
+                    var markerSourcenoph = highlightfeatures.getSource();
+                    markerSourcenoph.clear();
+                    markerSourcenoph.addFeature(feature);
+                    
+                    
+
+                    
+                }
+            },
+         complete: function(){
+                if (tamañopantalla==true){
+                quitgif(); }
+                else{
+                document.getElementById("carga3").style.display = "none";  
+                   }
+            }   
+        });
+    }
+    
+    
+});
+
+
+//herramienta medir
+var sketch;
+var helpTooltipElement;
+var helpTooltip;
+var measureTooltipElement;
+var measureTooltip;
+var continueLineMsg = 'Click to continue drawing the line';
+var source = new ol.source.Vector();
+var draw; // global so we can remove it later
+function addInteraction() {
+    var type = 'LineString';
+    draw = new ol.interaction.Draw({
+        source: source,
+        type: /** @type {ol.geom.GeometryType} */ (type),
+        style: new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgba(255, 255, 255, 0.2)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: 'rgba(0, 0, 0, 0.5)',
+                lineDash: [10, 10],
+                width: 2
+            }),
+            image: new ol.style.Circle({
+                radius: 5,
+                stroke: new ol.style.Stroke({
+                    color: 'rgba(0, 0, 0, 0.7)'
+                }),
+                fill: new ol.style.Fill({
+                    color: 'rgba(255, 255, 255, 0.2)'
+                })
+            })
+        })
+    });
+    //map.addInteraction(draw);
+    createMeasureTooltip();
+    createHelpTooltip();
+    var listener;
+    draw.on('drawstart',
+            function (evt) {
+                // set sketch
+                sketch = evt.feature;
+                /** @type {ol.Coordinate|undefined} */
+                var tooltipCoord = evt.coordinate;
+                listener = sketch.getGeometry().on('change', function (evt) {
+                    var geom = evt.target;
+                    var output;
+                    output = formatLength(/** @type {ol.geom.LineString} */ (geom));
+                    tooltipCoord = geom.getLastCoordinate();
+                    measureTooltipElement.innerHTML = output;
+                    measureTooltip.setPosition(tooltipCoord);
+                });
+            }, this);
+    draw.on('drawend',
+            function (evt) {
+                measureTooltipElement.className = 'tooltip tooltip-static';
+                measureTooltip.setOffset([0, -7]);
+                // unset sketch
+                sketch = null;
+                // unset tooltip so that a new one can be created
+                measureTooltipElement = null;
+                createMeasureTooltip();
+                ol.Observable.unByKey(listener);
+            }, this);
+}
+
+/**
+ * Creates a new help tooltip
+ */
+function createHelpTooltip() {
+    if (helpTooltipElement) {
+        helpTooltipElement.parentNode.removeChild(helpTooltipElement);
+    }
+    helpTooltipElement = document.createElement('div');
+    helpTooltipElement.className = 'tooltip hidden';
+    helpTooltip = new ol.Overlay({
+        element: helpTooltipElement,
+        offset: [15, 0],
+        positioning: 'center-left'
+    });
+    map.addOverlay(helpTooltip);
+}
+
+/**
+ * Creates a new measure tooltip
+ */
+function createMeasureTooltip() {
+    if (measureTooltipElement) {
+        measureTooltipElement.parentNode.removeChild(measureTooltipElement);
+    }
+    measureTooltipElement = document.createElement('div');
+    measureTooltipElement.className = 'tooltip tooltip-measure';
+    measureTooltip = new ol.Overlay({
+        element: measureTooltipElement,
+        offset: [0, -15],
+        positioning: 'bottom-center'
+    });
+    map.addOverlay(measureTooltip);
+}
+
+var wgs84Sphere = new ol.Sphere(6378137);
+/**
+ * format length output
+ * @param {ol.geom.LineString} line
+ * @return {string}
+ */
+var formatLength = function (line) {
+    var length;
+    length = Math.round(line.getLength() * 100) / 100;
+    var output;
+    if (length > 100) {
+        output = (Math.round(length / 1000 * 100) / 100) + ' ' + 'km';
+    } else {
+        output = (Math.round(length * 100) / 100) + ' ' + 'm';
+    }
+    return output;
+};
+addInteraction();
+

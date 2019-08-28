@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Street View Maps</title>
+        <link rel="stylesheet" href="css/google_maps.css">
+        <script src="src/app/index_evt/index_evt.js"></script>
+    </head>
+    <body>
+		<!--  div de la panoramica de google maps  -->
+       <div id="pano"></div>
+		 <div name="marco" id="marco" hidden="hidden"></div>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXhkFNQnLZmb9yH-tg6keYtNG45Wxhasw&signed_in=true&callback=initialize">
+        </script>
+    </body>
+</html>

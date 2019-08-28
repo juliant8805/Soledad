@@ -1,0 +1,28 @@
+<!--<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <script src="src/jquery/jquery.min.js"></script>
+        <script src="sql/jsSearch.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.8.10/themes/smoothness/jquery-ui.css" type="text/css">
+        <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js"></script>
+        <title>Geoportal Cucuta</title>
+    </head>
+    <body>
+        <script>
+            window.onload = function () {
+                var ca = document.cookie.split('=');
+                var select = search("cucuta:ValidateUser", ca[0], ca[1]);
+                if (select === null || select.length === 0) {
+                    select = search("cucuta:ValidateUser", ca[0], ca[1], 't');
+                    if (select === null || select.length === 0) {
+                        location.href = "index.html?ig=error";
+                    }
+                } else if (select[0][6] === "Administracion") {
+                    location.href = "admin.html";
+                } else {
+                    location.href = "ideep.html";
+                }
+            };
+        </script>
+    </body>
+</html>-->
