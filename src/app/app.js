@@ -360,6 +360,7 @@ map.on('singleclick', function (evt) {
                         //var registro = search("soledad:buscar_registros_soledad", codigo_ant);
                         var datosipu = search("soledad:datosipu", values.codigo);
                         var zhg = search("soledad:zhg_u_terreno", values.codigo);
+                        var captura = search("soledad:predios_street_view_captura", values.codigo);
                         console.log('LOS DATOS IPU',datosipu);
                         console.log('LOS DATOS zhg',zhg[0][5]);
                     try {
@@ -405,7 +406,7 @@ map.on('singleclick', function (evt) {
                     var documento = "Sin Información";
                     }
                     try {
-                    var avaluo = datosipu[0][7];
+                    var avaluo = "$ "+datosipu[0][7];
                     }
                     catch (error) {
                     var avaluo = "Sin Información";
@@ -424,11 +425,44 @@ map.on('singleclick', function (evt) {
                     var areac = "Sin Información";
                     }
                     try {
-                    var valorm2 = zhg[0][5];
+                    var valorm2 = "$ "+zhg[0][5];
                     }
                     catch (error) {
                     var valorm2 = "Sin Información";
                     }
+
+ 
+                    try {
+                    var npisos = captura[0][9];
+                    }
+                    catch (error) {
+                    var npisos = "Sin Información";
+                    }
+                    try {
+                    var actEcon = captura[0][13];
+                    }
+                    catch (error) {
+                    var actEcon = "Sin Información";
+                    }
+                    try {
+                    var destino = captura[0][10];
+                    }
+                    catch (error) {
+                    var destino = "Sin Información";
+                    }
+                    try {
+                    var mutacion = captura[0][11];
+                    }
+                    catch (error) {
+                    var mutacion = "Sin Información";
+                    }
+                    try {
+                    var observacio = captura[0][6];
+                    }
+                    catch (error) {
+                    var observacio = "Sin Información";
+                    }
+                        
                     
                     if (ph >= 800) {
                    
@@ -526,74 +560,163 @@ map.on('singleclick', function (evt) {
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
-                        cell11.innerHTML = "<input type='number' id='numeropisos' name='numeropisos' style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' placeholder='Ingrese el Número de Pisos que ve en la fotografía'>";
+                        cell11.innerHTML = "<input type='number' class='form-control' id='numeropisos' name='numeropisos' placeholder='Ingrese el Número de Pisos que ve en la fotografía'>";
 
-  								var row = tblatt.insertRow(3);
+  						var row = tblatt.insertRow(3);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: #cccccc; border:0; margin:0;";
                         cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>2. DESTINO ECONÓMICO:</h8>";
 
   								 								
-  								var row = tblatt.insertRow(4);
+  						var row = tblatt.insertRow(4);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
-                        cell11.innerHTML = "<select style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' id='destinofoto' name='destinofoto'><option value ='residencial'>Residencial</option><option value ='comercial'>Comercial</option><option value ='industrial'>Industrial</option><option value ='otro'>Otro no Residencial</option></select>";
+                        cell11.innerHTML = "<select class='form-control' id='destinofoto' name='destinofoto' style='text-align:left'><option value ='residencial'>Residencial</option><option value ='comercial'>Comercial</option><option value ='industrial'>Industrial</option><option value ='servicios'>Servicios</option><option value ='financiero'>Financiero</option><option value ='otro'>Otro no Residencial</option><option value ='mixto'>Mixto</option></select>";
+                        
+
+                        var row = tblatt.insertRow(5);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
+                        cell11.style = "background-color: white; border:0; margin:0;";
+                        cell11.innerHTML = "<select class='form-control' id='actEcdropdown' name='actEcdropdown' style='text-align:left'></select>";
+                        
+                        var jsonActEc = '{"activ_econo":[' +
+                        '{"destEc":"comercial","id":"B1","nombre":"Alimentos de consumo humano, insumos agropecuarios, entre otros, exceptuando bebidas alcohólicas.","value":"Venta de alimentos de consumo humano (excepto bebidas alcohólicas), productos, insumos agropecuarios incluida la maquinaria agrícola, venta de textos escolares y libros (incluye cuadernos escolares); venta de medicamentos e implementos hospitalarios, tienda de víveres y abarrotes, graneros, carnicerías y salsamentarías, panaderías, fruterías, distribuidoras de productos lácteos, distribuidoras de carnes, pollos, pescados y mariscos, comercializadoras de cemento, venta de productos y materiales para la construcción." },' +
+                        '{"destEc":"comercial","id":"B2","nombre":"Comercio de ocio, estético, cigarrerías y equipos suntuarios.","value": "Venta cigarrillos, licores y ranchos, venta de joyas, cosméticos, cristalería y demás equipos suntuarios, cristalería y demás artículos de lujo, tiendas y negocios que además de su actividad normal incluyan juegos y maquinitas." },' +
+                        '{"destEc":"comercial","id":"B3","nombre":"Estaciones de servicio.","value":"Venta combustibles y derivados del petróleo, gas combustible, comercialización de vehículos nuevos y usados, venta de impresos, libros y revistas distintas a escolares."},'+
+                        '{"destEc":"comercial","id":"B4","nombre":"Almacenes de Cadena u otros.","value":"Establecimientos que además de alimentos vendan otros productos como miscelánea, ropa, zapatos, juguetes, ferretería, electrodomésticos, artículos para el hogar." },' +
+                        '{"destEc":"comercial","id":"B5","nombre":"Otras actividades comerciales.","value": "Demás actividades comerciales no clasificadas anteriormente" },' +
+                        '{"destEc":"comercial","id":"E1","nombre":"Actividades industriales, comerciales y de servicios  contribuyente del régimen simplificado.","value":"Actividades industriales, comerciales y de servicios realizadas por contribuyentes del régimen simplificado." },'+
+                        '{"destEc":"industrial","id":"A1","nombre":"Producción o transformación de alimentos de consumo humano, helados, producción papelería o textos.","value":"Producción o transformación de alimentos de consumo humano, excepto bebidas, producción de helados, cebadas, hielo, agua envasada o empacada, producción de papelería y textos."},'+
+                        '{"destEc":"industrial","id":"A2","nombre":"Producción Agrícola, calzado, entre otros.","value":"Producción de alimentos de consumo animal, productos y materiales básicos para la agricultura y la ganadería, sustancias químicas, drogas y medicamentos, sacrificio y matanza de ganados, materiales para la construcción, producción de papel industrial y bolsas, calzado y prendas de vestir; producción de implementos médicos y hospitalarios, abonos y fertilizantes."},'+
+                        '{"destEc":"industrial","id":"A3","nombre":"Actividades industriales no clasificadas anteriormente.","value":"Demás actividades industriales no clasificadas anteriormente."},'+
+                        '{"destEc":"servicios","id":"C1","nombre":"Retroventas, moteles, amoblados entre otros.","value":"Expendio y distribución de bebidas alcohólicas, cafés, moteles, amoblados, residencias, casas de empeño o prenderías con pacto de retroventa."},'+
+                        '{"destEc":"servicios","id":"C2","nombre":"Servicio de hoteles, aparta hoteles y resta.","value":"Servicio de hoteles, aparta hoteles y restaurantes."},'+
+                        '{"destEc":"servicios","id":"C3","nombre":"Servicio de transporte, limpieza, inmobiliaria, vigilancia privada, entre otros.","value":"Servicio de transporte, individual y colectivo, servicios sociales y personales de : aseo, y limpieza, hospitales, odontología, agentes y corredores de seguros, fumigaciones, constructores y urbanizadores, publicidad e intermediación inmobiliaria, vigilancia privada, empleos temporales, heladerías, cafeterías, salones de té, estaderos que no venta de bebidas alcohólicas, telefonía y comunicaciones celulares, transmisión y procesamiento de datos, juegos de video, parqueaderos."},'+
+                        '{"destEc":"servicios","id":"C4","nombre":"Servicios médicos, laboratorios y clínicas privadas.","value":"Servicios médicos, de laboratorio y clínicas privadas, educación de carácter privado, educación tecnológica privada y universitaria, servicio de recreación."},'+
+                        '{"destEc":"servicios","id":"C5","nombre":"Actividades industriales no clasificadas anteriormente.","value":"Demás actividades industriales no clasificadas anteriormente."},'+
+                        '{"destEc":"financiero","id":"D1","nombre":"Actividades de ahorro y crédito.","value":"Actividades de ahorro y crédito."},'+
+                        '{"destEc":"financiero","id":"D2","nombre":"Demás actividades financieras.","value":"Demás actividades financieras."}]}';
+                         
+                        //on select destino económico
+                        $("#destinofoto").change(function() {
+                            let dropdown = $('#actEcdropdown');
+                            dropdown.empty();
+    
+                            dropdown.append('<option selected="true" disabled>Escoge una actividad Económica</option>');
+                            dropdown.prop('selectedIndex', 0);
+    
+                            let defaultOption = document.createElement('option');
+                            defaultOption.text = 'Seleccione';
+    
+                            dropdown.add(defaultOption);
+                            dropdown.selectedIndex = 0;
+    
+                            obAct= JSON.parse(jsonActEc);
+                            console.log("OBJETO ARRAY",obAct.activ_econo,"OBJETO tamaño",obAct.activ_econo.length);
+
+                            function actEconomica(destinoEconomico){
+                                let option;
+    
+                                for (i = 0; i < obAct.activ_econo.length; i++) {
+                                    if(obAct.activ_econo[i].destEc==destinoEconomico){
+                                        console.log('objeto comercial',i,obAct.activ_econo[i],destinoEconomico);
+                                        dropdown.append($('<option></option>').attr('value', obAct.activ_econo[i].id).text(obAct.activ_econo[i].id+'. '+obAct.activ_econo[i].nombre));
+                                        option = document.createElement('option');
+                                        option.text = obAct.activ_econo[i].id;
+                                        option.value = obAct.activ_econo[i].nombre;
+                                        dropdown.add(option);
+                                    }
+                                    else{
+                                        console.log('no entra a esta categoria');
+                                    }
+                                };
+                                return null;
+                            };
+
+                            if($(this).val() === "comercial" || $(this).val() === "industrial" || $(this).val() === "servicios" || $(this).val() === "financiero") {
+                                actEconomica($(this).val());                               
+                            }
+                            if($(this).val() === "mixto" ) {
+                                actEconomica($(this).val());
+                            }
+                            else if($(this).val() === "residencial" || $(this).val() === "otro" ) {
+                                dropdown.empty();
+                            }
+                          });
 
                         
-                        var row = tblatt.insertRow(5);
+                        
+                        var row = tblatt.insertRow(6);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: #cccccc; border:0; margin:0;";
                         cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>3. MUTACIÓN CATASTRAL:</h8>";
 
 
-                        var row = tblatt.insertRow(6);
+                        var row = tblatt.insertRow(7);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
-                        cell11.innerHTML = "<select style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' id='mutacion' name='mutacion'><option value ='sinnovedad'>Sin Novedad</option><option value ='Englobe'>Englobe</option><option value ='Desenglobe'>Desenglobe</option></select>";
+                        cell11.innerHTML = "<select style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' class='form-control' id='mutacion' name='mutacion'><option value ='sinnovedad'>Sin Novedad</option><option value ='Englobe'>Englobe</option><option value ='Desenglobe'>Desenglobe</option><option value ='cambioAreaConst'>Cambio de área construida</option></select>";
  
-                        var row = tblatt.insertRow(7);
+                        var row = tblatt.insertRow(8);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: #cccccc; border:0; margin:0;";
                         cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>4. OBSERVACIONES:</h8>";
 
  
-                        var row = tblatt.insertRow(8);
+                        var row = tblatt.insertRow(9);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
-                        cell11.innerHTML = "<input type='text' id='observacionespredio' name='observacionespredio' style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' placeholder='Diligencie cualquier tipo de información adicional'>";
+                        cell11.innerHTML = "<textarea class='form-control' id='observacionespredio' name='observacionespredio' style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' placeholder='Diligencie cualquier tipo de información adicional'></textarea>";
                        
                     
-                        var row = tblatt.insertRow(9);
+                        var row = tblatt.insertRow(10);
                         var cell12 = row.insertCell(0);
                         cell12.colSpan = 2;
                         cell12.style = "background-color: white; border:0; margin:0;";
                         cell12.innerHTML = "<button id='editarinfo' name='editarinfo' onclick='agregarinfoprediocaptura();' class='btn btn-primary btn-lg'>Guardar</button>";                        
                         
+                        //info catastral
                         select[0] = "<b>Dirección</b>";
                         select[1] = "<b>Codigo Catastral</b>";
+                        select[2] = "<b>Matricula Inmobiliaria</b>";
+                        select[3] = "<b>Avalúo</b>";
+                        select[4] = "<b>Propietario</b>";
+                        select[5] = "<b>Documento</b>";
                        // select[2] = "<b>Destino Ecónomico</b>";
-                        select[2] = "<b>Área de Terreno</b>";
-                        select[3] = "<b>Área Construida</b>";
-                        select[4] = "<b>Número de Pisos</b>";
-                        select[5] = "<b>Destino Económico Fotografia</b>";
-                        select[6] = "<b>Mutación Catastral</b>";
-                        select[7] = "<b>Observaciones</b>";
+                        select[6] = "<b>Área de Terreno</b>";
+                        select[7] = "<b>Área Construida</b>";
+                        select[8] = "<b>Valor M2</b>";
+
+                        //info captura
+                        select[9] = "<b>Número de Pisos</b>";
+                        select[10] = "<b>Destino Económico Fotografia</b>";
+                        select[11] = "<b>Actividad Económica Fotografia</b>";
+                        select[12] = "<b>Mutación Catastral</b>";
+                        select[13] = "<b>Observaciones</b>";
                         
                         sel[0] = direccion;
                         sel[1] = codigo_ant;
+                        sel[2] = matric;
+                        sel[3] = avaluo;
+                        sel[4] = propiet;
+                        sel[5] = documento;
                         //sel[2] = destino;
-                        sel[2] = areat + " Metros Cuadrados";
-                        sel[3] = areac + " Metros Cuadrados";
-                        sel[4] = values.npisos;
-                        sel[5] = values.destino;
-                        sel[6] = values.mutacion;
-                        sel[7] = values.observacio;
+                        sel[6] = areat + " Metros Cuadrados";
+                        sel[7] = areac + " Metros Cuadrados";
+                        sel[8] = valorm2;
+                        console.log("VALORES ",values);
+                        sel[9] = npisos;
+                        sel[10] = destino;
+                        sel[11] = actEcon;
+                        sel[12] = mutacion;
+                        sel[13] = observacio;
                     
                         var campos = 7;
                         for (i = 0; i < select.length; i++) {
