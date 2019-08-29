@@ -360,7 +360,7 @@ map.on('singleclick', function (evt) {
                         //var registro = search("soledad:buscar_registros_soledad", codigo_ant);
                         var datosipu = search("soledad:datosipu", values.codigo);
                         var zhg = search("soledad:zhg_u_terreno", values.codigo);
-                        var captura = search("soledad:predios_street_view_captura", values.codigo);
+                        var captura = search("soledad:captura", values.codigo);
                         console.log('LOS DATOS IPU',datosipu);
                         console.log('LOS DATOS zhg',zhg[0][5]);
                     try {
@@ -549,7 +549,7 @@ map.on('singleclick', function (evt) {
                         var sel = [];
                       
                     
-                    		var row = tblatt.insertRow(1);
+                    	var row = tblatt.insertRow(1);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: #cccccc; border:0; margin:0;";
@@ -573,7 +573,7 @@ map.on('singleclick', function (evt) {
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
-                        cell11.innerHTML = "<select class='form-control' id='destinofoto' name='destinofoto' style='text-align:left'><option value ='residencial'>Residencial</option><option value ='comercial'>Comercial</option><option value ='industrial'>Industrial</option><option value ='servicios'>Servicios</option><option value ='financiero'>Financiero</option><option value ='otro'>Otro no Residencial</option><option value ='mixto'>Mixto</option></select>";
+                        cell11.innerHTML = "<select class='form-control' id='destinofoto' name='destinofoto' style='text-align:left'><option value ='residencial'>Residencial</option><option value ='comercial'>Comercial</option><option value ='industrial'>Industrial</option><option value ='servicios'>Servicios</option><option value ='financiero'>Financiero</option><option value ='otro'>Otro</option><option value ='mixto'>Mixto</option></select>";
                         
 
                         var row = tblatt.insertRow(5);
@@ -581,6 +581,12 @@ map.on('singleclick', function (evt) {
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
                         cell11.innerHTML = "<select class='form-control' id='actEcdropdown' name='actEcdropdown' style='text-align:left'></select>";
+                        
+                        var row = tblatt.insertRow(5);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
+                        cell11.style = "background-color: white; border:0; margin:0;";
+                        cell11.innerHTML = "<div class='form-check'><input type='checkbox' class='form-check-input' id='mixto'><label class='form-check-label'>Habitacional</label></div>";
                         
                         var jsonActEc = '{"activ_econo":[' +
                         '{"destEc":"comercial","id":"B1","nombre":"Alimentos de consumo humano, insumos agropecuarios, entre otros, exceptuando bebidas alcohólicas.","value":"Venta de alimentos de consumo humano (excepto bebidas alcohólicas), productos, insumos agropecuarios incluida la maquinaria agrícola, venta de textos escolares y libros (incluye cuadernos escolares); venta de medicamentos e implementos hospitalarios, tienda de víveres y abarrotes, graneros, carnicerías y salsamentarías, panaderías, fruterías, distribuidoras de productos lácteos, distribuidoras de carnes, pollos, pescados y mariscos, comercializadoras de cemento, venta de productos y materiales para la construcción." },' +
@@ -604,6 +610,9 @@ map.on('singleclick', function (evt) {
                         $("#destinofoto").change(function() {
                             let dropdown = $('#actEcdropdown');
                             dropdown.empty();
+
+                            let mixto = $('#mixto');
+                            mixto.empty();
     
                             dropdown.append('<option selected="true" disabled>Escoge una actividad Económica</option>');
                             dropdown.prop('selectedIndex', 0);
@@ -616,6 +625,14 @@ map.on('singleclick', function (evt) {
     
                             obAct= JSON.parse(jsonActEc);
                             console.log("OBJETO ARRAY",obAct.activ_econo,"OBJETO tamaño",obAct.activ_econo.length);
+
+                            function nombreActEc(actEcon){
+                                let nombreAct;
+                                if(actEcon==obAct.activ_econo[i].id){
+                                    nombreAct= obAct.activ_econo[i].nombre;
+                                }
+                                return nombreAct;
+                            };
 
                             function actEconomica(destinoEconomico){
                                 let option;
@@ -640,43 +657,55 @@ map.on('singleclick', function (evt) {
                                 actEconomica($(this).val());                               
                             }
                             if($(this).val() === "mixto" ) {
-                                actEconomica($(this).val());
+                                dropdown.empty();
+                                mixto.append('<option selected="true" disabled>Escoge una actividad Económica</option>');
                             }
                             else if($(this).val() === "residencial" || $(this).val() === "otro" ) {
                                 dropdown.empty();
                             }
                           });
 
-                        
-                        
                         var row = tblatt.insertRow(6);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: #cccccc; border:0; margin:0;";
-                        cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>3. MUTACIÓN CATASTRAL:</h8>";
-
+                        cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>3. EQUIPAMIENTO:</h8>";
 
                         var row = tblatt.insertRow(7);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
-                        cell11.innerHTML = "<select style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' class='form-control' id='mutacion' name='mutacion'><option value ='sinnovedad'>Sin Novedad</option><option value ='Englobe'>Englobe</option><option value ='Desenglobe'>Desenglobe</option><option value ='cambioAreaConst'>Cambio de área construida</option></select>";
- 
+                        cell11.innerHTML = "<select class='form-control' id='equipamiento' name='equipamiento' style='text-align:left'><option value ='educativo'>Educativo</option><option value ='cultural'>Cultural</option><option value ='salud'>Salud</option><option value ='culto'>Culto</option><option value ='financiero'>Financiero</option><option value ='seguridad'>Seguridad</option><option value ='serviciosesp'>Servicios especiales</option><option value ='deport'>Deportivo/Recreativo</option><option value ='inst'>Institucional</option></select>";
+
+                        
                         var row = tblatt.insertRow(8);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: #cccccc; border:0; margin:0;";
-                        cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>4. OBSERVACIONES:</h8>";
+                        cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>4. MUTACIÓN CATASTRAL:</h8>";
+
+
+                        var row = tblatt.insertRow(9);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
+                        cell11.style = "background-color: white; border:0; margin:0;";
+                        cell11.innerHTML = "<select style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' class='form-control' id='mutacion' name='mutacion'><option value ='sinnovedad'>Sin Novedad</option><option value ='Englobe'>Englobe</option><option value ='Desenglobe'>Desenglobe</option><option value ='cambioAreaConst'>Cambio de área construida</option></select>";
+ 
+                        var row = tblatt.insertRow(10);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
+                        cell11.style = "background-color: #cccccc; border:0; margin:0;";
+                        cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>5. OBSERVACIONES:</h8>";
 
  
-                        var row = tblatt.insertRow(9);
+                        var row = tblatt.insertRow(11);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
                         cell11.innerHTML = "<textarea class='form-control' id='observacionespredio' name='observacionespredio' style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' placeholder='Diligencie cualquier tipo de información adicional'></textarea>";
                        
                     
-                        var row = tblatt.insertRow(10);
+                        var row = tblatt.insertRow(12);
                         var cell12 = row.insertCell(0);
                         cell12.colSpan = 2;
                         cell12.style = "background-color: white; border:0; margin:0;";
