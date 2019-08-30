@@ -351,6 +351,18 @@ map.on('singleclick', function (evt) {
                 catch (err) {
                     var temp ="nogeom";
                 }
+                document.getElementById("equipamiento").style.display = "none";
+
+                $("#tipo_elemento").change(function() {
+                    console.log($(this).val())
+                    if($(this).val() === "equipamientos") {
+                        document.getElementById("equipamiento").style.display = "block";           
+                    }
+                    else{
+                        document.getElementById("equipamiento").style.display = "none";          
+                    }
+                });
+
                 if (temp1 == "geom") {
                         var feature = features[0];
                         var values = feature.getProperties();
@@ -358,11 +370,9 @@ map.on('singleclick', function (evt) {
                         panoramica = values.nombre;
                         var ph = values.cod_ph;
                         //var registro = search("soledad:buscar_registros_soledad", codigo_ant);
-                        var datosipu = search("soledad:datosipu", values.codigo);
-                        var zhg = search("soledad:zhg_u_terreno", values.codigo);
-                        var captura = search("soledad:captura", values.codigo);
-                        console.log('LOS DATOS IPU',datosipu);
-                        console.log('LOS DATOS zhg',zhg[0][5]);
+                        var datosipu = search("soledad:datosipu", codigo_ant);
+                        var zhg = search("soledad:zhg", codigo_ant);
+                        var captura = search("soledad:captura", codigo_ant);
                     try {
                     var direccion = datosipu[0][0];
                     }
@@ -413,19 +423,19 @@ map.on('singleclick', function (evt) {
                     }
                     
                     try {
-                    var areat = datosipu[0][8];
+                    var areat = datosipu[0][8] + 'M2';
                     }
                     catch (error) {
                     var areat = "Sin Información";
                     }
                     try {
-                    var areac = datosipu[0][9];
+                    var areac = datosipu[0][9]+ 'M2';
                     }
                     catch (error) {
                     var areac = "Sin Información";
                     }
                     try {
-                    var valorm2 = "$ "+zhg[0][5];
+                    var valorm2 = "$ "+zhg[0][0];
                     }
                     catch (error) {
                     var valorm2 = "Sin Información";
@@ -433,31 +443,35 @@ map.on('singleclick', function (evt) {
 
  
                     try {
-                    var npisos = captura[0][9];
+                        var npisos = captura[0][0];
+                        console.log(npisos);
+                        if(npisos==''){
+                            var npisos = "Sin Información";
+                        };
                     }
                     catch (error) {
                     var npisos = "Sin Información";
                     }
                     try {
-                    var actEcon = captura[0][13];
+                    var actEcon = captura[0][2];
                     }
                     catch (error) {
                     var actEcon = "Sin Información";
                     }
                     try {
-                    var destino = captura[0][10];
+                    var destino = captura[0][1];
                     }
                     catch (error) {
                     var destino = "Sin Información";
                     }
                     try {
-                    var mutacion = captura[0][11];
+                    var mutacion = captura[0][3];
                     }
                     catch (error) {
                     var mutacion = "Sin Información";
                     }
                     try {
-                    var observacio = captura[0][6];
+                    var observacio = captura[0][4];
                     }
                     catch (error) {
                     var observacio = "Sin Información";
@@ -560,7 +574,7 @@ map.on('singleclick', function (evt) {
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
-                        cell11.innerHTML = "<input type='number' class='form-control' id='numeropisos' name='numeropisos' placeholder='Ingrese el Número de Pisos que ve en la fotografía'>";
+                        cell11.innerHTML = "<input type='number' min='0' class='form-control' id='numeropisos' name='numeropisos' placeholder='Ingrese el Número de Pisos que ve en la fotografía'>";
 
   						var row = tblatt.insertRow(3);
                         var cell11 = row.insertCell(0);
@@ -575,19 +589,45 @@ map.on('singleclick', function (evt) {
                         cell11.style = "background-color: white; border:0; margin:0;";
                         cell11.innerHTML = "<select class='form-control' id='destinofoto' name='destinofoto' style='text-align:left'><option value ='residencial'>Residencial</option><option value ='comercial'>Comercial</option><option value ='industrial'>Industrial</option><option value ='servicios'>Servicios</option><option value ='financiero'>Financiero</option><option value ='otro'>Otro</option><option value ='mixto'>Mixto</option></select>";
                         
-
+                        
                         var row = tblatt.insertRow(5);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
                         cell11.innerHTML = "<select class='form-control' id='actEcdropdown' name='actEcdropdown' style='text-align:left'></select>";
                         
-                        var row = tblatt.insertRow(5);
+                        var row = tblatt.insertRow(6);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
-                        cell11.innerHTML = "<div class='form-check'><input type='checkbox' class='form-check-input' id='mixto'><label class='form-check-label'>Habitacional</label></div>";
+                        cell11.innerHTML = "<input type='checkbox' class='custom-control-input' id='mixto1' name='mixto' style='display:inline-flex' value='Habitacional'><label class='custom-control-label' id='mixtol1'>Habitacional</label><input type='checkbox' class='custom-control-input' id='mixto2' name='mixto' style='display:inline-flex' value='Comercial'><label id='mixtol2' class='custom-control-label'>Comercial</label><input type='checkbox' class='custom-control-input' id='mixto3' name='mixto' style='display:inline-flex' value='Industrial'><label class='custom-control-label' id='mixtol3'>Industrial</label><input type='checkbox' class='custom-control-input' id='mixto4' name='mixto' style='display:inline-flex' value='Dotacional'><label class='custom-control-label' id='mixtol4'>Dotacional</label>";
                         
+                        var row = tblatt.insertRow(7);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
+                        cell11.style = "background-color: white; border:0; margin:0;";
+                        cell11.innerHTML = "<input type='checkbox' class='custom-control-input' id='otro' name='otro' style='display:inline-flex' value='T'><label class='custom-control-label' id='otrol'>Sobretasa</label>";
+
+                        document.getElementById("actEcdropdown").style.display = "none";
+
+                        function resetOtro(value){
+                            document.getElementById("otro").style.display = value;
+                            document.getElementById("otrol").style.display = value;
+                        };
+
+                        function resetMixto(value){
+                            document.getElementById("mixto1").style.display = value;
+                            document.getElementById("mixto2").style.display = value;
+                            document.getElementById("mixto3").style.display = value;
+                            document.getElementById("mixto4").style.display = value;
+                            document.getElementById("mixtol1").style.display = value;
+                            document.getElementById("mixtol2").style.display = value;
+                            document.getElementById("mixtol3").style.display = value;
+                            document.getElementById("mixtol4").style.display = value;
+                        };
+                        resetMixto("none");
+                        resetOtro("none");
+
                         var jsonActEc = '{"activ_econo":[' +
                         '{"destEc":"comercial","id":"B1","nombre":"Alimentos de consumo humano, insumos agropecuarios, entre otros, exceptuando bebidas alcohólicas.","value":"Venta de alimentos de consumo humano (excepto bebidas alcohólicas), productos, insumos agropecuarios incluida la maquinaria agrícola, venta de textos escolares y libros (incluye cuadernos escolares); venta de medicamentos e implementos hospitalarios, tienda de víveres y abarrotes, graneros, carnicerías y salsamentarías, panaderías, fruterías, distribuidoras de productos lácteos, distribuidoras de carnes, pollos, pescados y mariscos, comercializadoras de cemento, venta de productos y materiales para la construcción." },' +
                         '{"destEc":"comercial","id":"B2","nombre":"Comercio de ocio, estético, cigarrerías y equipos suntuarios.","value": "Venta cigarrillos, licores y ranchos, venta de joyas, cosméticos, cristalería y demás equipos suntuarios, cristalería y demás artículos de lujo, tiendas y negocios que además de su actividad normal incluyan juegos y maquinitas." },' +
@@ -607,12 +647,28 @@ map.on('singleclick', function (evt) {
                         '{"destEc":"financiero","id":"D2","nombre":"Demás actividades financieras.","value":"Demás actividades financieras."}]}';
                          
                         //on select destino económico
+
+                        $('input[name=mixto]').change(function(){
+                            var checkvalue = [];
+                            $.each($("input[name='mixto']:checked"), function(){            
+                                checkvalue.push($(this).val());
+                                checkvalue.join(", ");
+                            });
+                            console.log("checkvalue: " +checkvalue+ checkvalue.join("- "));
+
+                        });
+                        $('input[name=otro]').change(function(){
+                            var checkedOtro=$("input[name='otro']:checked").val();
+                            if(checkedOtro==undefined){
+                                checkedOtro='F';
+                            }
+                            console.log("checkvalue: " +checkedOtro);
+                        });
+      
+
                         $("#destinofoto").change(function() {
                             let dropdown = $('#actEcdropdown');
                             dropdown.empty();
-
-                            let mixto = $('#mixto');
-                            mixto.empty();
     
                             dropdown.append('<option selected="true" disabled>Escoge una actividad Económica</option>');
                             dropdown.prop('selectedIndex', 0);
@@ -624,15 +680,14 @@ map.on('singleclick', function (evt) {
                             dropdown.selectedIndex = 0;
     
                             obAct= JSON.parse(jsonActEc);
-                            console.log("OBJETO ARRAY",obAct.activ_econo,"OBJETO tamaño",obAct.activ_econo.length);
 
-                            function nombreActEc(actEcon){
-                                let nombreAct;
-                                if(actEcon==obAct.activ_econo[i].id){
-                                    nombreAct= obAct.activ_econo[i].nombre;
-                                }
-                                return nombreAct;
-                            };
+                            // function nombreActEc(actEcon){
+                            //     let nombreAct;
+                            //     if(actEcon==obAct.activ_econo[i].id){
+                            //         nombreAct= obAct.activ_econo[i].nombre;
+                            //     }
+                            //     return nombreAct;
+                            // };
 
                             function actEconomica(destinoEconomico){
                                 let option;
@@ -654,28 +709,36 @@ map.on('singleclick', function (evt) {
                             };
 
                             if($(this).val() === "comercial" || $(this).val() === "industrial" || $(this).val() === "servicios" || $(this).val() === "financiero") {
+                                $('input:checkbox').removeAttr('checked');
+                                document.getElementById("actEcdropdown").style.display = "block";
+                                resetOtro("none");
+                                resetMixto("none");
                                 actEconomica($(this).val());                               
                             }
                             if($(this).val() === "mixto" ) {
+                                $('input:checkbox').removeAttr('checked');
                                 dropdown.empty();
-                                mixto.append('<option selected="true" disabled>Escoge una actividad Económica</option>');
+                                document.getElementById("actEcdropdown").style.display = "none";
+                                resetOtro("none");
+                                resetMixto("inline-block");
+                                console.log('entro a la opcion mixto');
+                                
                             }
-                            else if($(this).val() === "residencial" || $(this).val() === "otro" ) {
+                            if($(this).val() === "residencial" ) {
+                                $('input:checkbox').removeAttr('checked');
                                 dropdown.empty();
+                                document.getElementById("actEcdropdown").style.display = "none";
+                                resetOtro("none");
+                                resetMixto("none");                              
+                            }
+                            else if($(this).val() === "otro" ) {
+                                document.getElementById("actEcdropdown").style.display = "none";
+                                dropdown.empty();
+                                resetMixto("none");
+                                $('input:checkbox').removeAttr('checked');
+                                resetOtro("inline-flex");
                             }
                           });
-
-                        var row = tblatt.insertRow(6);
-                        var cell11 = row.insertCell(0);
-                        cell11.colSpan = 2;
-                        cell11.style = "background-color: #cccccc; border:0; margin:0;";
-                        cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>3. EQUIPAMIENTO:</h8>";
-
-                        var row = tblatt.insertRow(7);
-                        var cell11 = row.insertCell(0);
-                        cell11.colSpan = 2;
-                        cell11.style = "background-color: white; border:0; margin:0;";
-                        cell11.innerHTML = "<select class='form-control' id='equipamiento' name='equipamiento' style='text-align:left'><option value ='educativo'>Educativo</option><option value ='cultural'>Cultural</option><option value ='salud'>Salud</option><option value ='culto'>Culto</option><option value ='financiero'>Financiero</option><option value ='seguridad'>Seguridad</option><option value ='serviciosesp'>Servicios especiales</option><option value ='deport'>Deportivo/Recreativo</option><option value ='inst'>Institucional</option></select>";
 
                         
                         var row = tblatt.insertRow(8);
@@ -694,18 +757,35 @@ map.on('singleclick', function (evt) {
                         var row = tblatt.insertRow(10);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
+                        cell11.style = "background-color: white; border:0; margin:0;";
+                        cell11.innerHTML = "<input type='number' step='any' min='0' class='form-control' id='areaMuta' name='areaMuta' placeholder='Ingrese el área construida'>";
+                        
+                        document.getElementById("areaMuta").style.display = "none";
+
+                        $("#mutacion").change(function() {
+                            if($(this).val() === "cambioAreaConst") {
+                                document.getElementById("areaMuta").style.display = "block";            
+                            }
+                            else{
+                                document.getElementById("areaMuta").style.display = "none";           
+                            }
+                        });
+
+                        var row = tblatt.insertRow(11);
+                        var cell11 = row.insertCell(0);
+                        cell11.colSpan = 2;
                         cell11.style = "background-color: #cccccc; border:0; margin:0;";
                         cell11.innerHTML = "<h8 style='padding:0px; margin:0px; font-weight:bold;'>5. OBSERVACIONES:</h8>";
 
  
-                        var row = tblatt.insertRow(11);
+                        var row = tblatt.insertRow(12);
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
                         cell11.innerHTML = "<textarea class='form-control' id='observacionespredio' name='observacionespredio' style='background-color: #white; color:black; font-size: 12px; border-top:0px; border-left:0px; border-right:0px; border-bottom:1px solid #62BAD3; text-align:center; width:100%; height:3em;' placeholder='Diligencie cualquier tipo de información adicional'></textarea>";
                        
                     
-                        var row = tblatt.insertRow(12);
+                        var row = tblatt.insertRow(13);
                         var cell12 = row.insertCell(0);
                         cell12.colSpan = 2;
                         cell12.style = "background-color: white; border:0; margin:0;";
@@ -737,10 +817,9 @@ map.on('singleclick', function (evt) {
                         sel[4] = propiet;
                         sel[5] = documento;
                         //sel[2] = destino;
-                        sel[6] = areat + " Metros Cuadrados";
-                        sel[7] = areac + " Metros Cuadrados";
+                        sel[6] = areat;
+                        sel[7] = areac;
                         sel[8] = valorm2;
-                        console.log("VALORES ",values);
                         sel[9] = npisos;
                         sel[10] = destino;
                         sel[11] = actEcon;

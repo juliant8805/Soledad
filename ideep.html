@@ -217,10 +217,10 @@
    <!-- <div class="col-md-3" id="statistics"></div>-->
     	<img id="leyenda_hallazgos" src="./imagenes/leyenda_hallazgos.png" >
   		<img id="leyenda_captura" src="./imagenes/leyenda_captura.png" >
-<!--    	<button id="botonocultarstatistics" hidden="hidden" onclick="ocultarstatistics();" style="background:url('./imagenes/ocultarstatistics.png'); background-repeat:no-repeat;"></button>
-   	<button id="botonmostrarstatistics" hidden="hidden" onclick="mostrarstatistics();" style="background:url('./imagenes/mostrarstatistics.png'); background-repeat:no-repeat;"></button>
+		<button id="botonocultarstatistics" hidden="hidden" onclick="ocultarstatistics();" style="background:url('./imagenes/ocultarstatistics.png'); background-repeat:no-repeat;"></button>
+		<button id="botonmostrarstatistics" hidden="hidden" onclick="mostrarstatistics();" style="background:url('./imagenes/mostrarstatistics.png'); background-repeat:no-repeat;"></button>
     	<button id="botonmostrarpanelatributos" hidden="hidden" onclick="mostrarpanelatributos();" style="background:url('./imagenes/mostrarstatistics.png'); background-repeat:no-repeat;"></button>
-    	<button id="botonocultarpanelatributos" hidden="hidden" onclick="ocultarpanelatributos();" style="background:url('./imagenes/ocultarstatistics.png'); background-repeat:no-repeat;"></button>-->
+		<button id="botonocultarpanelatributos" hidden="hidden" onclick="ocultarpanelatributos();" style="background:url('./imagenes/ocultarstatistics.png'); background-repeat:no-repeat;"></button>
     	<div id="mouse-position" hidden="hidden"></div>
     		<div style="position:absolute; bottom:4em; right:4em; text-align:center; padding: 0px 0px 0px 0px; background-color: #ffffff; border-radius: 25.5px; box-shadow: 0px 1px 8px 1px;">	         
             <div id="barratransparencia">
@@ -241,7 +241,27 @@
 			      </div>
 			      <div class="modal-body" style="padding:20px 20px 5px">    	
 						<table class="table table-striped table-bordered table-condensed" id="tblatt" style="background-color: #f2f2f2">
-						</table>
+						</table> 
+
+						<!-- <div class="custom-control custom-checkbox">
+							<input type='checkbox' class='custom-control-input' id='mixto' name='mixto'>
+							<label class='custom-control-label' value='Habitacional'>Habitacional</label>						
+						</div>
+						<div class="custom-control custom-checkbox">
+							<input type='checkbox' class='custom-control-input' id='mixto' name='mixto'>
+							<label class='custom-control-label' value='Comercial'>Comercial</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+							<input type='checkbox' class='custom-control-input' id='mixto' name='mixto'>
+							<label class='custom-control-label' value='Industrial'>Industrial</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+							<input type='checkbox' class='custom-control-input' id='mixto' name='mixto'>
+							<label class='custom-control-label' value='Dotacional'>Dotacional</label>";
+						</div> -->
+
+
+
 
 						<!-- <form>
 			           <div class="form-group">
@@ -304,16 +324,21 @@
 		      <div class="modal-body" style="padding:20px 20px 5px">
 		     		<form>
 	     			  <div class="form-group">
-						 <label for="tipo_elemento">Tipo de Elemento</label>
+						 <label for="tipo_elemento1">Tipo de Elemento</label>
 						 <select class="form-control" id="tipo_elemento" name='tipo_elemento' style="text-align:left">
 							<option value ='avisosyletreros'>Avisos y Tableros</option>
 							<option value ='publicidadexterior'>Publicidad Exterior</option>
-						 </select>
+							<option value ='equipamientos'>Equipamientos</option> 
+						</select>
 					  </div>
-		           <div class="form-group">
+					  <div class="form-group">
+						<select class='form-control' id='equipamiento' name='equipamiento' style='text-align:left'><option value ='educativo'>Educativo</option><option value ='cultural'>Cultural</option><option value ='salud'>Salud</option><option value ='culto'>Culto</option><option value ='financiero'>Financiero</option><option value ='seguridad'>Seguridad</option><option value ='serviciosesp'>Servicios especiales</option><option value ='deport'>Deportivo/Recreativo</option><option value ='inst'>Institucional</option></select>
+					 </div>
+
+		           <!-- <div class="form-group">
 			          <label for="recipient-name" class="col-form-label">Nombre:</label>
 			          <input type="text" class="form-control" id="nombrepublicidad" name='nombrepublicidad' placeholder='Diligencie un nombre de referencia'>
-		           </div>
+		           </div> -->
 		          <div class="form-group">
 		            <label for="message-text" class="col-form-label">Observaciones:</label>
 		            <textarea class="form-control" id="observaciones" name='observaciones' placeholder='Diligencie cualquier tipo de información adicional'></textarea>
