@@ -15,7 +15,7 @@ function guardar_wfs() {
                 srsname: 'EPSG:3857',
                 viewparams: viewParamsStr
             };
-   var url15 = 'http://35.226.110.153:8081/geoserver/'
+   var url15 = 'http://35.226.110.153:8081/geoserver/';
    
    $.ajax({
         url: url15+"ows?",
@@ -135,6 +135,7 @@ $.ajax('http://35.226.110.153:8081/geoserver/soledad/ows', {
 var id_wfs = search("soledad:id_wfs");
 var tipo = document.getElementById('tipo_elemento').value;
 //var nombrepublicidad = document.getElementById('nombrepublicidad').value;
+var equip = document.getElementById('equipamiento').value;
 
 var observaciones = document.getElementById('observaciones').value;
 var lat_img = eG.latitude;
@@ -146,7 +147,7 @@ var viewer_x = eG.viewer_x;
 var viewer_y = eG.viewer_y;
 
 
-var payload2 = '<wfs:Transaction service="WFS" version="1.0.0" xmlns:soledad="http://soledad" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wfs="http://www.opengis.net/wfs"><wfs:Update typeName="soledad:wfs_point"><wfs:Property><wfs:Name>streetview</wfs:Name><wfs:Value>' + photosphereG +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>tipo</wfs:Name><wfs:Value>' + tipo +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>nombrepublicidad</wfs:Name><wfs:Value>' + '' +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>observacio</wfs:Name><wfs:Value>' + observaciones +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>latitud_r</wfs:Name><wfs:Value>' + lat_img +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>longitud_r</wfs:Name><wfs:Value>' + long_img +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>style</wfs:Name><wfs:Value>' + tipo +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>texture_x</wfs:Name><wfs:Value>' + texture_x +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>texture_y</wfs:Name><wfs:Value>' + texture_y +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>viewer_x</wfs:Name><wfs:Value>' + viewer_x +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>viewer_y</wfs:Name><wfs:Value>' + viewer_y +'</wfs:Value></wfs:Property><ogc:Filter><ogc:PropertyIsNull><ogc:PropertyName>streetview</ogc:PropertyName></ogc:PropertyIsNull></ogc:Filter></wfs:Update></wfs:Transaction>';                 
+var payload2 = '<wfs:Transaction service="WFS" version="1.0.0" xmlns:soledad="http://soledad" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wfs="http://www.opengis.net/wfs"><wfs:Update typeName="soledad:wfs_point"><wfs:Property><wfs:Name>streetview</wfs:Name><wfs:Value>' + photosphereG +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>tipo</wfs:Name><wfs:Value>' + tipo +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>equip</wfs:Name><wfs:Value>' + equip +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>nombrepublicidad</wfs:Name><wfs:Value>' + '' +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>observacio</wfs:Name><wfs:Value>' + observaciones +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>latitud_r</wfs:Name><wfs:Value>' + lat_img +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>longitud_r</wfs:Name><wfs:Value>' + long_img +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>style</wfs:Name><wfs:Value>' + tipo +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>texture_x</wfs:Name><wfs:Value>' + texture_x +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>texture_y</wfs:Name><wfs:Value>' + texture_y +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>viewer_x</wfs:Name><wfs:Value>' + viewer_x +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>viewer_y</wfs:Name><wfs:Value>' + viewer_y +'</wfs:Value></wfs:Property><ogc:Filter><ogc:PropertyIsNull><ogc:PropertyName>streetview</ogc:PropertyName></ogc:PropertyIsNull></ogc:Filter></wfs:Update></wfs:Transaction>';                 
 //var payload2 = '<wfs:Transaction service="WFS" version="1.0.0" xmlns:soledad="http://soledad" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wfs="http://www.opengis.net/wfs"><wfs:Update typeName="soledad:wfs_point"><wfs:Property><wfs:Name>streetview</wfs:Name><wfs:Value>' + photosphereG +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>tipo</wfs:Name><wfs:Value>' + tipo +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>nombrepublicidad</wfs:Name><wfs:Value>' + nombrepublicidad +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>observacio</wfs:Name><wfs:Value>' + observaciones +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>latitud_r</wfs:Name><wfs:Value>' + lat_img +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>longitud_r</wfs:Name><wfs:Value>' + long_img +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>style</wfs:Name><wfs:Value>' + tipo +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>texture_x</wfs:Name><wfs:Value>' + texture_x +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>texture_y</wfs:Name><wfs:Value>' + texture_y +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>viewer_x</wfs:Name><wfs:Value>' + viewer_x +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>viewer_y</wfs:Name><wfs:Value>' + viewer_y +'</wfs:Value></wfs:Property><ogc:Filter><ogc:PropertyIsNull><ogc:PropertyName>streetview</ogc:PropertyName></ogc:PropertyIsNull></ogc:Filter></wfs:Update></wfs:Transaction>';             
 $.ajax(url15+'soledad/ows', {
         type: 'POST',
@@ -188,17 +189,34 @@ function agregarinfoprediocaptura() {
 var npisos = document.getElementById('numeropisos').value;
 var destino = document.getElementById('destinofoto').value;
 var actEcon = document.getElementById('actEcdropdown').value;
-var checkvalueMixto = [];
+var areaCons = document.getElementById('areaMuta').value;
+var sobretasa=$("input[name='otro']:checked").val();
+
+if(destino=='otro'){
+    if(sobretasa==undefined){
+        sobretasa='no';
+    }
+    console.log(sobretasa);
+}
+else{
+    sobretasa='';
+};
+
+
+var checkvalue = [];
 $.each($("input[name='mixto']:checked"), function(){            
-    checkvalueMixto.push($(this).val());
-    checkvalueMixto.join(", ");
+    checkvalue.push($(this).val());
+    checkvalue.join(", ");
 });
-console.log("checkvalue: " +checkvalueMixto);
+                            
+console.log(checkvalue,npisos,destino,actEcon,mutacion,observaciones,areaCons,otro);
 
 var mutacion = document.getElementById('mutacion').value;
 var observaciones = document.getElementById('observacionespredio').value;
-var payload3 = '<wfs:Transaction service="WFS" version="1.0.0" xmlns:soledad="http://soledad" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wfs="http://www.opengis.net/wfs"><wfs:Update typeName="soledad:predios_street_view_captura"><wfs:Property><wfs:Name>npisos</wfs:Name><wfs:Value>' + npisos +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>destino</wfs:Name><wfs:Value>' + destino +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>act_econo</wfs:Name><wfs:Value>' + actEcon +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>mutacion</wfs:Name><wfs:Value>' + mutacion +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>observacio</wfs:Name><wfs:Value>' + observaciones +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>editor</wfs:Name><wfs:Value>pruebas</wfs:Value></wfs:Property><wfs:Property><wfs:Name>hallazgos</wfs:Name><wfs:Value>capturado</wfs:Value></wfs:Property><ogc:Filter><ogc:PropertyIsEqualTo><ogc:PropertyName>codigo_ant</ogc:PropertyName><ogc:Literal>' + codigo_ant + '</ogc:Literal></ogc:PropertyIsEqualTo></ogc:Filter></wfs:Update></wfs:Transaction>';             
-$.ajax(url15+'soledad/ows', {
+
+var payload3 = '<wfs:Transaction service="WFS" version="1.0.0" xmlns:soledad="http://soledad" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wfs="http://www.opengis.net/wfs"><wfs:Update typeName="soledad:predios_street_view_captura"><wfs:Property><wfs:Name>npisos</wfs:Name><wfs:Value>' + npisos +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>destino</wfs:Name><wfs:Value>' + destino +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>act_econo</wfs:Name><wfs:Value>' + actEcon +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>mutacion</wfs:Name><wfs:Value>' + mutacion +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>area_constr</wfs:Name><wfs:Value>' + areaCons +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>mixto_dest</wfs:Name><wfs:Value>' + checkvalue +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>sobretasa</wfs:Name><wfs:Value>'+ sobretasa +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>observacio</wfs:Name><wfs:Value>' + observaciones +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>editor</wfs:Name><wfs:Value>pruebas</wfs:Value></wfs:Property><wfs:Property><wfs:Name>hallazgos</wfs:Name><wfs:Value>capturado</wfs:Value></wfs:Property><ogc:Filter><ogc:PropertyIsEqualTo><ogc:PropertyName>codigo_ant</ogc:PropertyName><ogc:Literal>' + codigo_ant + '</ogc:Literal></ogc:PropertyIsEqualTo></ogc:Filter></wfs:Update></wfs:Transaction>';             
+
+$.ajax('http://35.226.110.153:8081/geoserver/soledad/ows', {
         type: 'POST',
         dataType: 'xml',
         processData: false,

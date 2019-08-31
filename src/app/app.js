@@ -364,15 +364,16 @@ map.on('singleclick', function (evt) {
                 });
 
                 if (temp1 == "geom") {
-                        var feature = features[0];
-                        var values = feature.getProperties();
-                        codigo_ant = values.codigo_ant;
-                        panoramica = values.nombre;
-                        var ph = values.cod_ph;
-                        //var registro = search("soledad:buscar_registros_soledad", codigo_ant);
-                        var datosipu = search("soledad:datosipu", codigo_ant);
-                        var zhg = search("soledad:zhg", codigo_ant);
-                        var captura = search("soledad:captura", codigo_ant);
+                    var feature = features[0];
+                    var values = feature.getProperties();
+                    codigo_ant = values.codigo_ant;
+                    panoramica = values.nombre;
+                    var ph = values.cod_ph;
+                    //var registro = search("soledad:buscar_registros_soledad", codigo_ant);
+                    var datosipu = search("soledad:datosipu", codigo_ant);
+                    var zhg = search("soledad:zhg", codigo_ant);
+                    var captura = search("soledad:captura", codigo_ant);
+
                     try {
                     var direccion = datosipu[0][0];
                     }
@@ -402,13 +403,7 @@ map.on('singleclick', function (evt) {
                     }
                     catch (error) {
                     var propiet = "Sin Información";
-                    }   
-                    try {
-                    var propiet = datosipu[0][4];
-                    }
-                    catch (error) {
-                    var propiet = "Sin Información";
-                    }             
+                    }          
                     try {
                     var documento = datosipu[0][5];
                     }
@@ -441,40 +436,86 @@ map.on('singleclick', function (evt) {
                     var valorm2 = "Sin Información";
                     }
 
- 
                     try {
                         var npisos = captura[0][0];
-                        console.log(npisos);
-                        if(npisos==''){
-                            var npisos = "Sin Información";
+                        if(npisos=="" || npisos == null || npisos== undefined){
+                            npisos = "Sin Información";
                         };
                     }
                     catch (error) {
                     var npisos = "Sin Información";
                     }
                     try {
-                    var actEcon = captura[0][2];
+                        var actEcon = captura[0][2];
+                        if(actEcon == null || actEcon== undefined){
+                            actEcon = "";
+                        };
                     }
                     catch (error) {
                     var actEcon = "Sin Información";
                     }
                     try {
                     var destino = captura[0][1];
+                    if(destino=="" || destino == null || destino== undefined){
+                        destino = "Sin Información";
+                    };
                     }
                     catch (error) {
                     var destino = "Sin Información";
                     }
                     try {
-                    var mutacion = captura[0][3];
+                        var mutacion = captura[0][3];
+                        if(mutacion=="" || mutacion == null || mutacion== undefined){
+                            mutacion = "Sin Información";
+                        }
+                        else if(mutacion=='cambioAreaConst'){
+                            mutacion='cambio de área construida'
+                        }
+                        else if(mutacion=='sinnovedad'){
+                            mutacion='Sin novedad'
+                        }
                     }
                     catch (error) {
                     var mutacion = "Sin Información";
                     }
                     try {
-                    var observacio = captura[0][4];
+                        var observacio = captura[0][4];
+                        if(observacio=="Sin" || observacio=="" || observacio == null || observacio== undefined){
+                            observacio = "Sin Información";
+                        }
                     }
                     catch (error) {
                     var observacio = "Sin Información";
+                    }
+                    try {
+                        var mixto = captura[0][5];
+                        if(mixto == null || mixto== undefined){
+                            mixto = "";
+                        };
+                    }
+                    catch (error) {
+                    var mixto = "";
+                    }
+                    try {
+                        var areaMutada = captura[0][6];
+                        if(areaMutada == "" || areaMutada == null || areaMutada== undefined){
+                            areaMutada = "";
+                        }
+                        else {
+                            areaMutada = areaMutada + 'm2';
+                        }
+                    }
+                    catch (error) {
+                    var areaMutada = "";
+                    }
+                    try {
+                    var sobretasa = captura[0][7];
+                    if(sobretasa == "" || sobretasa == null || sobretasa== undefined){
+                        sobretasa = "Sin Información";
+                    }
+                    }
+                    catch (error) {
+                    var sobretasa = "Sin Información";
                     }
                         
                     
@@ -558,7 +599,7 @@ map.on('singleclick', function (evt) {
                         var row = table.insertRow(0);
                         var cell1 = row.insertCell(0);
                         cell1.colSpan = 2;
-                        cell1.innerHTML = "<b>INFORMACION DEL PREDIO</b>";
+                        cell1.innerHTML = "<b>INFORMACION CATASTRAL</b>";
                         var select = [];
                         var sel = [];
                       
@@ -587,7 +628,7 @@ map.on('singleclick', function (evt) {
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
-                        cell11.innerHTML = "<select class='form-control' id='destinofoto' name='destinofoto' style='text-align:left'><option value ='residencial'>Residencial</option><option value ='comercial'>Comercial</option><option value ='industrial'>Industrial</option><option value ='servicios'>Servicios</option><option value ='financiero'>Financiero</option><option value ='otro'>Otro</option><option value ='mixto'>Mixto</option></select>";
+                        cell11.innerHTML = "<select class='form-control' id='destinofoto' name='destinofoto' style='text-align:left'><option value ='residencial' >Residencial</option><option value ='comercial'>Comercial</option><option value ='industrial'>Industrial</option><option value ='servicios'>Servicios</option><option value ='financiero'>Financiero</option><option value ='otro'>Otro</option><option value ='mixto'>Mixto</option></select>";
                         
                         
                         var row = tblatt.insertRow(5);
@@ -606,7 +647,7 @@ map.on('singleclick', function (evt) {
                         var cell11 = row.insertCell(0);
                         cell11.colSpan = 2;
                         cell11.style = "background-color: white; border:0; margin:0;";
-                        cell11.innerHTML = "<input type='checkbox' class='custom-control-input' id='otro' name='otro' style='display:inline-flex' value='T'><label class='custom-control-label' id='otrol'>Sobretasa</label>";
+                        cell11.innerHTML = "<input type='checkbox' class='custom-control-input' id='otro' name='otro' style='display:inline-flex' value='si' checked><label class='custom-control-label' id='otrol'>Sobretasa</label>";
 
                         document.getElementById("actEcdropdown").style.display = "none";
 
@@ -647,25 +688,7 @@ map.on('singleclick', function (evt) {
                         '{"destEc":"financiero","id":"D2","nombre":"Demás actividades financieras.","value":"Demás actividades financieras."}]}';
                          
                         //on select destino económico
-
-                        $('input[name=mixto]').change(function(){
-                            var checkvalue = [];
-                            $.each($("input[name='mixto']:checked"), function(){            
-                                checkvalue.push($(this).val());
-                                checkvalue.join(", ");
-                            });
-                            console.log("checkvalue: " +checkvalue+ checkvalue.join("- "));
-
-                        });
-                        $('input[name=otro]').change(function(){
-                            var checkedOtro=$("input[name='otro']:checked").val();
-                            if(checkedOtro==undefined){
-                                checkedOtro='F';
-                            }
-                            console.log("checkvalue: " +checkedOtro);
-                        });
-      
-
+                          
                         $("#destinofoto").change(function() {
                             let dropdown = $('#actEcdropdown');
                             dropdown.empty();
@@ -720,9 +743,7 @@ map.on('singleclick', function (evt) {
                                 dropdown.empty();
                                 document.getElementById("actEcdropdown").style.display = "none";
                                 resetOtro("none");
-                                resetMixto("inline-block");
-                                console.log('entro a la opcion mixto');
-                                
+                                resetMixto("inline-block");                                
                             }
                             if($(this).val() === "residencial" ) {
                                 $('input:checkbox').removeAttr('checked');
@@ -732,10 +753,10 @@ map.on('singleclick', function (evt) {
                                 resetMixto("none");                              
                             }
                             else if($(this).val() === "otro" ) {
+                                $('input:checkbox').removeAttr('checked');
                                 document.getElementById("actEcdropdown").style.display = "none";
                                 dropdown.empty();
                                 resetMixto("none");
-                                $('input:checkbox').removeAttr('checked');
                                 resetOtro("inline-flex");
                             }
                           });
@@ -806,7 +827,7 @@ map.on('singleclick', function (evt) {
                         //info captura
                         select[9] = "<b>Número de Pisos</b>";
                         select[10] = "<b>Destino Económico Fotografia</b>";
-                        select[11] = "<b>Actividad Económica Fotografia</b>";
+                        select[11] = "<b>Sobretasa</b>";
                         select[12] = "<b>Mutación Catastral</b>";
                         select[13] = "<b>Observaciones</b>";
                         
@@ -821,12 +842,11 @@ map.on('singleclick', function (evt) {
                         sel[7] = areac;
                         sel[8] = valorm2;
                         sel[9] = npisos;
-                        sel[10] = destino;
-                        sel[11] = actEcon;
-                        sel[12] = mutacion;
+                        sel[10] = destino +' '+mixto + actEcon;
+                        sel[11] = sobretasa;
+                        sel[12] = mutacion + areaMutada;
                         sel[13] = observacio;
                     
-                        var campos = 7;
                         for (i = 0; i < select.length; i++) {
                             row = table.insertRow(i + 1);
                             cell1 = row.insertCell(0);
