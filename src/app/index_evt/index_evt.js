@@ -148,7 +148,6 @@ var viewer_y = eG.viewer_y;
 
 
 var payload2 = '<wfs:Transaction service="WFS" version="1.0.0" xmlns:soledad="http://soledad" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wfs="http://www.opengis.net/wfs"><wfs:Update typeName="soledad:wfs_point"><wfs:Property><wfs:Name>streetview</wfs:Name><wfs:Value>' + photosphereG +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>tipo</wfs:Name><wfs:Value>' + tipo +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>equip</wfs:Name><wfs:Value>' + equip +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>nombrepublicidad</wfs:Name><wfs:Value>' + '' +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>observacio</wfs:Name><wfs:Value>' + observaciones +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>latitud_r</wfs:Name><wfs:Value>' + lat_img +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>longitud_r</wfs:Name><wfs:Value>' + long_img +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>style</wfs:Name><wfs:Value>' + tipo +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>texture_x</wfs:Name><wfs:Value>' + texture_x +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>texture_y</wfs:Name><wfs:Value>' + texture_y +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>viewer_x</wfs:Name><wfs:Value>' + viewer_x +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>viewer_y</wfs:Name><wfs:Value>' + viewer_y +'</wfs:Value></wfs:Property><ogc:Filter><ogc:PropertyIsNull><ogc:PropertyName>streetview</ogc:PropertyName></ogc:PropertyIsNull></ogc:Filter></wfs:Update></wfs:Transaction>';                 
-//var payload2 = '<wfs:Transaction service="WFS" version="1.0.0" xmlns:soledad="http://soledad" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wfs="http://www.opengis.net/wfs"><wfs:Update typeName="soledad:wfs_point"><wfs:Property><wfs:Name>streetview</wfs:Name><wfs:Value>' + photosphereG +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>tipo</wfs:Name><wfs:Value>' + tipo +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>nombrepublicidad</wfs:Name><wfs:Value>' + nombrepublicidad +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>observacio</wfs:Name><wfs:Value>' + observaciones +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>latitud_r</wfs:Name><wfs:Value>' + lat_img +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>longitud_r</wfs:Name><wfs:Value>' + long_img +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>style</wfs:Name><wfs:Value>' + tipo +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>texture_x</wfs:Name><wfs:Value>' + texture_x +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>texture_y</wfs:Name><wfs:Value>' + texture_y +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>viewer_x</wfs:Name><wfs:Value>' + viewer_x +'</wfs:Value></wfs:Property><wfs:Property><wfs:Name>viewer_y</wfs:Name><wfs:Value>' + viewer_y +'</wfs:Value></wfs:Property><ogc:Filter><ogc:PropertyIsNull><ogc:PropertyName>streetview</ogc:PropertyName></ogc:PropertyIsNull></ogc:Filter></wfs:Update></wfs:Transaction>';             
 $.ajax(url15+'soledad/ows', {
         type: 'POST',
         dataType: 'xml',
@@ -162,7 +161,7 @@ $.ajax(url15+'soledad/ows', {
             }
         }).done(function() {
                 sourceWFS.clear();
-    });
+        });
 document.getElementById("panel_atr_update").style.display = "none";          
             
      }
@@ -236,8 +235,8 @@ $.ajax('http://35.226.110.153:8081/geoserver/soledad/ows', {
 }
 
 function giropsv(giropsv) {
-	 var heading = fotopan2[0][3];
-	 console.log(heading);
+    var heading = fotopan2[0][3];
+    console.log(heading);
     var feat = new ol.Feature({
         geometry: new ol.geom.Point(res)
     });
@@ -249,92 +248,39 @@ function giropsv(giropsv) {
     view.setZoom(19);
     var markerSource = highlightfeatures.getSource();
     markerSource.clear();
+
+    function styleGiroPSV(style1,style2,style3,style4,style5,style6,style7,style8){
+        if (giropsv >= 0 && giropsv <= 0.78539) {
+            highlightfeatures.setStyle(style1);
+        } else if (giropsv >= 0.78540 && giropsv <= 1.57079) {
+            highlightfeatures.setStyle(style2);
+        } else if (giropsv >= 1.57080 && giropsv <= 2.35618) {
+            highlightfeatures.setStyle(style3);
+        } else if (giropsv >= 2.35619 && giropsv <= 3.14157) {
+            highlightfeatures.setStyle(style4);
+        } else if (giropsv >= 3.14158 && giropsv <= 3.92697) {
+            highlightfeatures.setStyle(style5);
+        } else if (giropsv >= 3.92698 && giropsv <= 4.71236) {
+            highlightfeatures.setStyle(style6);
+        } else if (giropsv >= 4.71237 && giropsv <= 5.49775) {
+            highlightfeatures.setStyle(style7);
+        } else if (giropsv >= 5.49776 && giropsv <= 6.283186) {
+            highlightfeatures.setStyle(style8);
+        } 
+    };
    
 	if (heading >= 0 && heading <= 90) {
-    if (giropsv >= 0 && giropsv <= 0.78539) {
-         highlightfeatures.setStyle(psvgiroStyle3);
-    } else if (giropsv >= 0.78540 && giropsv <= 1.57079) {
-        highlightfeatures.setStyle(psvgiroStyle4);
-    } else if (giropsv >= 1.57080 && giropsv <= 2.35618) {
-        highlightfeatures.setStyle(psvgiroStyle5);
-    } else if (giropsv >= 2.35619 && giropsv <= 3.14157) {
-        highlightfeatures.setStyle(psvgiroStyle6);
-    } else if (giropsv >= 3.14158 && giropsv <= 3.92697) {
-        highlightfeatures.setStyle(psvgiroStyle7);
-    } else if (giropsv >= 3.92698 && giropsv <= 4.71236) {
-        highlightfeatures.setStyle(psvgiroStyle8);
-    } else if (giropsv >= 4.71237 && giropsv <= 5.49775) {
-        highlightfeatures.setStyle(psvgiroStyle9);
-    } else if (giropsv >= 5.49776 && giropsv <= 6.283186) {
-        highlightfeatures.setStyle(psvgiroStyle2);
-    } 
-  }  
-  
-else if (heading >= 91 && heading <= 180) {
-	/*	console.log(heading);
-  	console.log(giropsv);*/
-    if (giropsv >= 0 && giropsv <= 0.78539) {
-         highlightfeatures.setStyle(psvgiroStyle5);
-    } else if (giropsv >= 0.78540 && giropsv <= 1.57079) {
-        highlightfeatures.setStyle(psvgiroStyle6);
-    } else if (giropsv >= 1.57080 && giropsv <= 2.35618) {
-        highlightfeatures.setStyle(psvgiroStyle7);
-    } else if (giropsv >= 2.35619 && giropsv <= 3.14157) {
-        highlightfeatures.setStyle(psvgiroStyle8);
-    } else if (giropsv >= 3.14158 && giropsv <= 3.92697) {
-        highlightfeatures.setStyle(psvgiroStyle9);
-    } else if (giropsv >= 3.92698 && giropsv <= 4.71236) {
-        highlightfeatures.setStyle(psvgiroStyle2);
-    } else if (giropsv >= 4.71237 && giropsv <= 5.49775) {
-        highlightfeatures.setStyle(psvgiroStyle3);
-    } else if (giropsv >= 5.49776 && giropsv <= 6.283186) {
-        highlightfeatures.setStyle(psvgiroStyle4);
-    } 
-  }  
-  
-  else if (heading >= 181 && heading <= 270) {
-  		//console.log(heading);
-  	//console.log(giropsv);
-    if (giropsv >= 0 && giropsv <= 0.78539) {
-         highlightfeatures.setStyle(psvgiroStyle7);
-    } else if (giropsv >= 0.78540 && giropsv <= 1.57079) {
-        highlightfeatures.setStyle(psvgiroStyle8);
-    } else if (giropsv >= 1.57080 && giropsv <= 2.35618) {
-        highlightfeatures.setStyle(psvgiroStyle9);
-    } else if (giropsv >= 2.35619 && giropsv <= 3.14157) {
-        highlightfeatures.setStyle(psvgiroStyle2);
-    } else if (giropsv >= 3.14158 && giropsv <= 3.92697) {
-        highlightfeatures.setStyle(psvgiroStyle3);
-    } else if (giropsv >= 3.92698 && giropsv <= 4.71236) {
-        highlightfeatures.setStyle(psvgiroStyle4);
-    } else if (giropsv >= 4.71237 && giropsv <= 5.49775) {
-        highlightfeatures.setStyle(psvgiroStyle5);
-    } else if (giropsv >= 5.49776 && giropsv <= 6.283186) {
-        highlightfeatures.setStyle(psvgiroStyle6);
-    } 
-  }
-  
-  else if (heading >= 271 && heading <= 360) {
-    if (giropsv >= 0 && giropsv <= 0.78539) {
-         highlightfeatures.setStyle(psvgiroStyle9);
-    } else if (giropsv >= 0.78540 && giropsv <= 1.57079) {
-        highlightfeatures.setStyle(psvgiroStyle2);
-    } else if (giropsv >= 1.57080 && giropsv <= 2.35618) {
-        highlightfeatures.setStyle(psvgiroStyle3);
-    } else if (giropsv >= 2.35619 && giropsv <= 3.14157) {
-        highlightfeatures.setStyle(psvgiroStyle4);
-    } else if (giropsv >= 3.14158 && giropsv <= 3.92697) {
-        highlightfeatures.setStyle(psvgiroStyle5);
-    } else if (giropsv >= 3.92698 && giropsv <= 4.71236) {
-        highlightfeatures.setStyle(psvgiroStyle6);
-    } else if (giropsv >= 4.71237 && giropsv <= 5.49775) {
-        highlightfeatures.setStyle(psvgiroStyle7);
-    } else if (giropsv >= 5.49776 && giropsv <= 6.283186) {
-        highlightfeatures.setStyle(psvgiroStyle8);
-    } 
-  }
-  
-  
+        styleGiroPSV(psvgiroStyle3,psvgiroStyle4,psvgiroStyle5,psvgiroStyle6,psvgiroStyle7,psvgiroStyle8,psvgiroStyle9,psvgiroStyle2)
+    }  
+    else if (heading >= 91 && heading <= 180) {
+        styleGiroPSV(psvgiroStyle5,psvgiroStyle6,psvgiroStyle7,psvgiroStyle8,psvgiroStyle9,psvgiroStyle2,psvgiroStyle3,psvgiroStyle4)
+    }  
+    else if (heading >= 181 && heading <= 270) {
+        styleGiroPSV(psvgiroStyle7,psvgiroStyle8,psvgiroStyle9,psvgiroStyle2,psvgiroStyle3,psvgiroStyle4,psvgiroStyle5,psvgiroStyle6)
+    }
+    else if (heading >= 271 && heading <= 360) {
+        styleGiroPSV(psvgiroStyle9,psvgiroStyle2,psvgiroStyle3,psvgiroStyle4,psvgiroStyle5,psvgiroStyle6,psvgiroStyle7,psvgiroStyle8)
+    }
     markerSource.addFeature(feat);	
 }
 
@@ -345,8 +291,8 @@ function mostrar(consulta) {
     document.getElementById('barra_barrio').style.display = 'none';
     document.getElementById('barra_codigo').style.display = 'none';
     //document.getElementById('barra_busqueda_direccion').style.display = 'none';
-    document.getElementById('barra_busqueda_matricula').style.display = 'none';
-    //document.getElementById('barra_matricula').style.display = 'none';
+    //document.getElementById('barra_busqueda_matricula').style.display = 'none';
+    document.getElementById('barra_matricula').style.display = 'none';
     document.getElementById('barra_comuna').style.display = 'none';
     document.getElementById('barra_localidad').style.display = 'none';
     document.getElementById('barra_manzana').style.display = 'none';
@@ -363,12 +309,12 @@ function mostrar(consulta) {
     document.getElementById('direccion').value = "";
     if (consulta === 'consulta_direccion') {
         document.getElementById('barra_direccion').style.display = 'block';
-        localidad.setVisible(false);
+        //localidad.setVisible(false);
         manzana.setVisible(false);
         barrio.setVisible(false);
     } else if (consulta === 'consulta_sitio') {
         document.getElementById('barra_sitio').style.display = 'block';
-        localidad.setVisible(false);
+        //localidad.setVisible(false);
         manzana.setVisible(false);
         barrio.setVisible(false);
     } else if (consulta === 'consulta_propietario') {
@@ -376,7 +322,7 @@ function mostrar(consulta) {
     } else if (consulta === 'consulta_barrio') {
         document.getElementById('barra_barrio').style.display = 'block';
         barrio.setVisible(true);
-        localidad.setVisible(false);
+        //localidad.setVisible(false);
         predio.setVisible(false);
         manzana.setVisible(false);
         // map.getView().fitExtent(barrio.getExtent(), map.getSize());
@@ -388,14 +334,14 @@ function mostrar(consulta) {
         document.getElementById('barra_comuna').style.display = 'block';
     } else if (consulta === 'consulta_localidad') {
         document.getElementById('barra_localidad').style.display = 'block';
-        localidad.setVisible(true);
+        //localidad.setVisible(true);
         barrio.setVisible(false);
         predio.setVisible(false);
         manzana.setVisible(false);
         map.getView().fitExtent(barrio.getExtent(), map.getSize());
     } else if (consulta === 'consulta_manzana') {
         document.getElementById('barra_manzana').style.display = 'block';
-        localidad.setVisible(false);
+        //localidad.setVisible(false);
         barrio.setVisible(false);
         //manzana.setVisible(true);
         map.getView().fitExtent(barrio.getExtent(), map.getSize());
@@ -403,108 +349,45 @@ function mostrar(consulta) {
 }
 
 function mostrartotem(consulta) {
+    function resetItems(){
+        document.getElementById("inputsitiototem").value = "";
+        document.getElementById("inputmanzanatotem").value = "";
+        document.getElementById("inputlocalidadtotem").value = "";
+        document.getElementById("inputbarriototem").value = "";
+        document.getElementById("inputdirecciontotem").value = "";
+    };
+    function showItems(item1,item2,item3,item4,item5,item6,item7,item8,item9){
+        document.getElementById('inputlocalidadtotem').style.display = item1;
+        document.getElementById('inputmanzanatotem').style.display = item2;
+        document.getElementById('inputsitiototem').style.display = item3;
+        document.getElementById('inputbarriototem').style.display = item4;
+        document.getElementById('inputdirecciontotem').style.display = item5;
+        document.getElementById('consultas_totem').style.display = item6;
+        document.getElementById('exp1').style.display = item7;
+        document.getElementById('buscar_dir').style.display = item8;
+        var x = document.getElementById(item9);
+        x.play();
+    };
     if (consulta == 'direcciontotem') {
-        document.getElementById("inputsitiototem").value = "";
-        document.getElementById("inputmanzanatotem").value = "";
-        document.getElementById("inputlocalidadtotem").value = "";
-        document.getElementById("inputbarriototem").value = "";
-        document.getElementById("inputdirecciontotem").value = "";
-        document.getElementById('inputlocalidadtotem').style.display = 'none';
-        document.getElementById('inputmanzanatotem').style.display = 'none';
-        document.getElementById('inputsitiototem').style.display = 'none';
-        document.getElementById('inputbarriototem').style.display = 'none';
-        document.getElementById('inputdirecciontotem').style.display = 'block';
-        document.getElementById('consultas_totem').style.display = 'block';
-        document.getElementById('exp1').style.display = 'block';
-        var x = document.getElementById("audiodireccion");
-        x.play();
+        resetItems();
+        showItems('none','none','none','none','block','block','block','block',"audiodireccion")
     } else if (consulta == 'referencia') {
-        document.getElementById("inputsitiototem").value = "";
-        document.getElementById("inputmanzanatotem").value = "";
-        document.getElementById("inputlocalidadtotem").value = "";
-        document.getElementById("inputbarriototem").value = "";
-        document.getElementById("inputdirecciontotem").value = "";
-        document.getElementById('inputlocalidadtotem').style.display = 'none';
-        document.getElementById('inputmanzanatotem').style.display = 'none';
-        document.getElementById('inputbarriototem').style.display = 'none';
-        document.getElementById('inputdirecciontotem').style.display = 'none';
-        document.getElementById('exp1').style.display = 'none';
-        document.getElementById('buscar_dir').style.display = 'none';
-        document.getElementById('inputsitiototem').style.display = 'block';
-        document.getElementById('consultas_totem').style.display = 'block';
-        var x = document.getElementById("audiorefcatastral");
-        x.play();
+        resetItems();
+        showItems('none','none','block','none','none','block','none','none',"audiorefcatastral")
     } else if (consulta == 'sitiototem') {
-        document.getElementById("inputsitiototem").value = "";
-        document.getElementById("inputmanzanatotem").value = "";
-        document.getElementById("inputlocalidadtotem").value = "";
-        document.getElementById("inputbarriototem").value = "";
-        document.getElementById("inputdirecciontotem").value = "";
-        document.getElementById('inputlocalidadtotem').style.display = 'none';
-        document.getElementById('inputmanzanatotem').style.display = 'none';
-        document.getElementById('inputbarriototem').style.display = 'none';
-        document.getElementById('inputdirecciontotem').style.display = 'none';
-        document.getElementById('exp1').style.display = 'none';
-        document.getElementById('buscar_dir').style.display = 'none';
-        document.getElementById('buscar_dir').style.display = 'none';
-        document.getElementById('inputsitiototem').style.display = 'block';
-        document.getElementById('consultas_totem').style.display = 'block';
-        var x = document.getElementById("audiositio");
-        x.play();
+        resetItems();
+        showItems('none','none','block','none','none','block','none','none',"audiositio")
     } else if (consulta == 'localidad') {
-        document.getElementById("inputsitiototem").value = "";
-        document.getElementById("inputmanzanatotem").value = "";
-        document.getElementById("inputlocalidadtotem").value = "";
-        document.getElementById("inputbarriototem").value = "";
-        document.getElementById("inputdirecciontotem").value = "";
-        document.getElementById('exp1').style.display = 'none';
-        document.getElementById('buscar_dir').style.display = 'none';
-        document.getElementById('inputmanzanatotem').style.display = 'none';
-        document.getElementById('inputsitiototem').style.display = 'none';
-        document.getElementById('inputbarriototem').style.display = 'none';
-        document.getElementById('inputdirecciontotem').style.display = 'none';
-        document.getElementById('inputlocalidadtotem').style.display = 'block';
-        document.getElementById('consultas_totem').style.display = 'block';
-        var x = document.getElementById("audiolocalidad");
-        x.play();
+        resetItems();
+        showItems('block','none','none','none','none','block','none','none',"audiolocalidad")
     } else if (consulta == 'barrio') {
-        document.getElementById("inputsitiototem").value = "";
-        document.getElementById("inputmanzanatotem").value = "";
-        document.getElementById("inputlocalidadtotem").value = "";
-        document.getElementById("inputbarriototem").value = "";
-        document.getElementById("inputdirecciontotem").value = "";
-        document.getElementById('buscar_dir').style.display = 'none';
-        document.getElementById('exp1').style.display = 'none';
-        document.getElementById('inputlocalidadtotem').style.display = 'none';
-        document.getElementById('inputmanzanatotem').style.display = 'none';
-        document.getElementById('inputsitiototem').style.display = 'none';
-        document.getElementById('inputdirecciontotem').style.display = 'none';
-        document.getElementById('inputbarriototem').style.display = 'block';
-        document.getElementById('consultas_totem').style.display = 'block';
-        var x = document.getElementById("audiobarrio");
-        x.play();
+        resetItems();
+        showItems('none','none','none','block','none','block','none','none',"audiobarrio")
     } else if (consulta == 'manzana') {
-        document.getElementById("inputsitiototem").value = "";
-        document.getElementById("inputmanzanatotem").value = "";
-        document.getElementById("inputlocalidadtotem").value = "";
-        document.getElementById("inputbarriototem").value = "";
-        document.getElementById("inputdirecciontotem").value = "";
-        document.getElementById('exp1').style.display = 'none';
-        document.getElementById('buscar_dir').style.display = 'none';
-        document.getElementById('inputdirecciontotem').style.display = 'none';
-        document.getElementById('inputsitiototem').style.display = 'none';
-        document.getElementById('inputlocalidadtotem').style.display = 'none';
-        document.getElementById('inputbarriototem').style.display = 'none';
-        document.getElementById('inputmanzanatotem').style.display = 'block';
-        document.getElementById('consultas_totem').style.display = 'block';
-        var x = document.getElementById("audiomanzana");
-        x.play();
+        resetItems();
+        showItems('none','block','none','none','none','block','none','none',"audiomanzana")
     } else if (consulta == 'barriototem') {
-        document.getElementById("inputsitiototem").value = "";
-        document.getElementById("inputmanzanatotem").value = "";
-        document.getElementById("inputlocalidadtotem").value = "";
-        document.getElementById("inputbarriototem").value = "";
-        document.getElementById("inputdirecciontotem").value = "";
+        resetItems();
         document.getElementById('exp1').style.display = 'none';
         document.getElementById('buscar_dir').style.display = 'none';
         document.getElementById('inputdirecciontotem').style.display = 'none';
@@ -520,11 +403,7 @@ function mostrartotem(consulta) {
         //var x = document.getElementById("audiomanzana");
         //x.play();
     } else if (consulta == 'manzanatotem') {
-        document.getElementById("inputsitiototem").value = "";
-        document.getElementById("inputmanzanatotem").value = "";
-        document.getElementById("inputlocalidadtotem").value = "";
-        document.getElementById("inputbarriototem").value = "";
-        document.getElementById("inputdirecciontotem").value = "";
+        resetItems();
         document.getElementById('exp1').style.display = 'none';
         document.getElementById('buscar_dir').style.display = 'none';
         document.getElementById('inputdirecciontotem').style.display = 'none';
@@ -539,11 +418,7 @@ function mostrartotem(consulta) {
         //var x = document.getElementById("audiomanzana");
         //x.play();
     } else if (consulta == 'prediototem') {
-        document.getElementById("inputsitiototem").value = "";
-        document.getElementById("inputmanzanatotem").value = "";
-        document.getElementById("inputlocalidadtotem").value = "";
-        document.getElementById("inputbarriototem").value = "";
-        document.getElementById("inputdirecciontotem").value = "";
+        resetItems();
         document.getElementById('inputlocalidadtotem').style.display = 'none';
         document.getElementById('inputmanzanatotem').style.display = 'none';
         document.getElementById('inputsitiototem').style.display = 'none';
@@ -555,21 +430,15 @@ function mostrartotem(consulta) {
         //document.getElementById('submenuprediototem').style.display = 'block';
         //document.getElementById('inputdirecciontotem').style.display = 'block';
         //document.getElementById('consultas_totem').style.display = 'block';
-    } else if (consulta == 'direcciontotemp')
-    {
+    } else if (consulta == 'direcciontotemp') {
         document.getElementById('menu_predio').style.display = 'none';
         document.getElementById('submenuprediototem').style.display = 'none';
         document.getElementById('inputdirecciontotem').style.display = 'none';
         document.getElementById('menu_totemp').style.display = 'none';
         document.getElementById('consultas_totem').style.display = 'none';
         document.getElementById('consultas_totemp').style.display = 'block';
-    } else if (consulta == 'sitiototemp')
-    {
-        document.getElementById("inputsitiototem").value = "";
-        document.getElementById("inputmanzanatotem").value = "";
-        document.getElementById("inputlocalidadtotem").value = "";
-        document.getElementById("inputbarriototem").value = "";
-        document.getElementById("inputdirecciontotem").value = "";
+    } else if (consulta == 'sitiototemp') {
+        resetItems();
         document.getElementById('exp1').style.display = 'none';
         document.getElementById('buscar_dir').style.display = 'none';
         document.getElementById('inputdirecciontotem').style.display = 'none';
